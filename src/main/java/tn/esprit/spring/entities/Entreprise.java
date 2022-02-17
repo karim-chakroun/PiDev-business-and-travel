@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -26,11 +27,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Entreprise extends User  implements Serializable{
+public class Entreprise   implements Serializable{
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idEntreprise;
 	
-	@NonNull private String nomEntreprise, CodeTva;
-	
+	@NonNull private String nomEntreprise, CodeTva, email,password;
+	@NonNull private int numTel;
+
 	@Enumerated(EnumType.STRING)
 	private Domain domain;
 	 @ToString.Exclude
@@ -45,6 +51,12 @@ public class Entreprise extends User  implements Serializable{
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<Voyage> voyages;
+	@ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
+		private Set<ParticipationEvenement> participationEvenements;
+	 @ToString.Exclude
+		@ManyToOne
+		private User users;
 	 
 	 
 }

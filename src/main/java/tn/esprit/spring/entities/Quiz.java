@@ -28,6 +28,7 @@ import lombok.ToString;
 //@NoArgsConstructor
 @RequiredArgsConstructor
 public class Quiz  implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +36,7 @@ public class Quiz  implements Serializable{
 	@ToString.Exclude
 	@ManyToOne
 	private Entreprise entreprises;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="quizs")
-		private Set<Response> responses;
+	
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quizs")
 		private Set<Question> questions;

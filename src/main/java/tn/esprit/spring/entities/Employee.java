@@ -7,6 +7,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -23,9 +26,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Employee extends User implements Serializable {
+public class Employee  implements Serializable {
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idEmployee;
 	
+	@NonNull private String  email,password;
+	@NonNull private int numTel;
+
 	@NonNull private String FirstName, LastName;
 	@NonNull private float prime;
 	@NonNull private java.util.Date dateNaissance;
@@ -35,15 +45,11 @@ public class Employee extends User implements Serializable {
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Comment> comments;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Rating> ratings;
+	
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<FeedBack> feedBacks;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Response> responses;
+
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Participation> participation;

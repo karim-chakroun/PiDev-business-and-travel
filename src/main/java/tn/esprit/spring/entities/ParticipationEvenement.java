@@ -24,16 +24,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Rating  implements Serializable{
+public class ParticipationEvenement implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idRating;
-	@NonNull private int like, dislike;
-
+	private int idEvenement;
+	
+	@NonNull private java.util.Date dateParticipation;
 	@ToString.Exclude
 	@ManyToOne
-	private Post posts;
-	
+	private Entreprise entreprises;
+	 @ToString.Exclude
+		@ManyToOne
+		private Evenement evenements;
+
 }

@@ -25,14 +25,13 @@ import lombok.ToString;
 //@NoArgsConstructor
 @RequiredArgsConstructor
 public class Response  implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idResponse;
 	@ToString.Exclude
 	@ManyToOne
-	private Employee employees;
-	@ToString.Exclude
-	@ManyToOne
-	private Quiz quizs;
+	private Question questions;
+
 }
