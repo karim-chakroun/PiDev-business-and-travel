@@ -38,4 +38,7 @@ public class Task  implements Serializable{
 	@ToString.Exclude
 	@ManyToOne
 	private Project projects;
+	@ToString.Exclude
+	@ManyToOne
+	private Employee employees;
 }
