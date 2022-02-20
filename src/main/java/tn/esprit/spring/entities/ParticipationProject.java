@@ -3,8 +3,6 @@ package tn.esprit.spring.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,20 +22,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class ParticipationEvenement implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-
+public class ParticipationProject implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idParticipEvenement;
+	private int idParticipProject;
 	
 	@NonNull private java.util.Date dateParticipation;
 	@ToString.Exclude
 	@ManyToOne
-	private Entreprise entreprises;
+	private Project projects;
 	 @ToString.Exclude
 		@ManyToOne
-		private Evenement evenements;
-
+		private Employee employees;
 }

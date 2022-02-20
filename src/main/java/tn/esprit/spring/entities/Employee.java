@@ -56,9 +56,10 @@ public class Employee  implements Serializable {
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Complain> complains;
+	
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Project> projects;
+		private Set<ParticipationProject> participationProjects;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Task> tasks;

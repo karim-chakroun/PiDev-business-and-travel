@@ -15,4 +15,5 @@ public interface ProjectService {
 	Project updateProject(Project p);
 
 	Project retrieveProject(int id);
+	int NbreIntervenant(int idProject);
 }

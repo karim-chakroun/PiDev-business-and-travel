@@ -42,9 +42,10 @@ public class Project  implements Serializable{
 	
 	private Etat etat= Etat.pending;
 	
-	@ToString.Exclude
-	@ManyToOne
-	private Employee employees;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="projects")
+		private Set<ParticipationProject> participationProjects;
+
 	@ToString.Exclude
 	@ManyToOne
 	private Entreprise entreprises;
