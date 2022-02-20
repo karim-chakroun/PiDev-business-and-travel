@@ -45,4 +45,10 @@ ProjectRepository projectRepository;
 		return projectRepository.findById(id).get();
 	}
 
+	@Override
+	public int NbreIntervenant(int idProject) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
