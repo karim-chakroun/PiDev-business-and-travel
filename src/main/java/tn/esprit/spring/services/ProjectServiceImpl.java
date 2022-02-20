@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tn.esprit.spring.entities.Employee;
-import tn.esprit.spring.entities.Etat;
 import tn.esprit.spring.entities.Project;
 import tn.esprit.spring.repository.ProjectRepository;
 
@@ -36,6 +34,8 @@ ProjectRepository projectRepository;
 	@Override
 	public Project updateProject(Project p) {
 		// TODO Auto-generated method stub
+		int idProject=p.getIdProject();
+		p.setIntervenant(projectRepository.getNbreIntervenant(idProject));
 		return projectRepository.save(p);
 	}
 
@@ -48,7 +48,8 @@ ProjectRepository projectRepository;
 	@Override
 	public int NbreIntervenant(int idProject) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
+
+		return projectRepository.getNbreIntervenant(idProject);
+		}
 
 }

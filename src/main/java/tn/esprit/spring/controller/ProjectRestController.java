@@ -37,6 +37,12 @@ public class ProjectRestController {
 			List<Project> listProject= projectService.retrieveAllProjects();
 			return listProject;
 		}
+		//http://localhost:8088/SpringMVC/project/retrieve-nbreIntervenant/1
+		@ApiOperation(value = "udpdate nbre intervenant dans un projet et recuperer le nbre d'intervenant par projet ")
+		@GetMapping("/retrieve-nbreIntervenant/{idProject}")
+		public int getNbreIntervenant(@PathVariable("idProject") int projectId) {
+			return projectService.NbreIntervenant(projectId);
+		}
 
 		// http://localhost:8088/SpringMVC/project/retrieve-project/1
 		@ApiOperation(value = "Récupérer un project par Id")
