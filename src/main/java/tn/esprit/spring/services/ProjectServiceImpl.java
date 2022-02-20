@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entities.Employee;
+import tn.esprit.spring.entities.Etat;
 import tn.esprit.spring.entities.Project;
 import tn.esprit.spring.repository.ProjectRepository;
 
@@ -21,6 +23,7 @@ ProjectRepository projectRepository;
 	@Override
 	public Project addProject(Project p) {
 		// TODO Auto-generated method stub
+		p.setEtat(Etat.pending);
 		return projectRepository.save(p);
 	}
 
