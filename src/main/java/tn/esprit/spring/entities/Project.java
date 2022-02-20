@@ -37,9 +37,11 @@ public class Project  implements Serializable{
 
 	@NonNull private java.util.Date dateDebut, dateFin;
 	@NonNull private float budget;
-	@NonNull private int intervenant;
+	@NonNull private int intervenant=0;
 	@Enumerated(EnumType.STRING)
-	private Etat etat;
+	
+	private Etat etat= Etat.pending;
+	
 	@ToString.Exclude
 	@ManyToOne
 	private Employee employees;

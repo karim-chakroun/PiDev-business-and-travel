@@ -37,7 +37,7 @@ public class Employee  implements Serializable {
 	@NonNull private int numTel;
 
 	@NonNull private String FirstName, LastName;
-	@NonNull private float prime;
+	@NonNull private float prime=0;
 	@NonNull private java.util.Date dateNaissance;
 
 	@Enumerated(EnumType.STRING)

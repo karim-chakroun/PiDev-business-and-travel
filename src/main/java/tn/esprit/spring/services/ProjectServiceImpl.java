@@ -23,7 +23,7 @@ ProjectRepository projectRepository;
 	@Override
 	public Project addProject(Project p) {
 		// TODO Auto-generated method stub
-		p.setEtat(Etat.pending);
+		//p.setEtat(Etat.pending);
 		return projectRepository.save(p);
 	}
 

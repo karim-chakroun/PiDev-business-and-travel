@@ -22,7 +22,7 @@ EmployeeRepository employeeRepository;
 	@Override
 	public Employee addEmployee(Employee e) {
 		// TODO Auto-generated method stub
-		e.setPrime(0);
+	
 		return employeeRepository.save(e);
 	}
 
