@@ -34,8 +34,8 @@ public class User  implements Serializable{
 	private int idUser;
 	@NonNull private String email, password, address;
 	@NonNull private int numTel;
-@OneToOne
-	private Role role;
+	@ManyToMany(cascade = CascadeType.ALL)
+    private Set<Role> roles;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="users")
 		private Set<Entreprise> entreprises;

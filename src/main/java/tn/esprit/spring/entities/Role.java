@@ -1,12 +1,14 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +33,8 @@ public class Role implements Serializable {
 	private int idRole;
 	@NonNull private String roles;
 	@ToString.Exclude
-	@OneToOne(mappedBy="role")
-	private User users;
+	@ManyToMany(mappedBy="roles", cascade = CascadeType.ALL)
+    private Set<User> users;
+
 
 }

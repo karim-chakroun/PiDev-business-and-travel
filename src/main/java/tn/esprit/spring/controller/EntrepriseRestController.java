@@ -27,7 +27,7 @@ public class EntrepriseRestController {
 	EntrepriseService entrepriseService;
 	@Autowired
 	IEmployeeService employeeService;
-	// http://localhost:8089/SpringMVC/entreprise/retrieve-all-entreprise
+	// http://localhost:8088/SpringMVC/entreprise/retrieve-all-entreprise
 		@ApiOperation(value = "Récupérer la liste des entreprises")
 		@GetMapping("/retrieve-all-entreprise")
 		public List<Entreprise> getEntreprises() {
@@ -35,7 +35,7 @@ public class EntrepriseRestController {
 			return listEntreprises;
 		}
 
-		// http://localhost:8089/SpringMVC/entreprise/retrieve-entreprise/1
+		// http://localhost:8088/SpringMVC/entreprise/retrieve-entreprise/1
 		@ApiOperation(value = "Récupérer un entreprise par Id")
 		@GetMapping("/retrieve-entreprise/{entreprise-id}")
 //		@ApiResponses(value = {
@@ -52,13 +52,13 @@ public class EntrepriseRestController {
 			return entrepriseService.addEntreprise(e);
 		}
 
-		// http://localhost:8089/SpringMVC/entreprise/remove-entreprise/1
+		// http://localhost:8088/SpringMVC/entreprise/remove-entreprise/1
 		@DeleteMapping("/remove-entreprise/{entreprise-id}")
 		public void removeEntreprise(@PathVariable("entreprise-id") int entrepriseId) {
 			entrepriseService.deleteEntreprise(entrepriseId);
 		}
 
-		// http://localhost:8089/SpringMVC/entreprise/modify-entreprise
+		// http://localhost:8088/SpringMVC/entreprise/modify-entreprise
 		@PutMapping("/modify-entreprise")
 		public Entreprise modifyEntreprise(@RequestBody Entreprise e) {
 			return entrepriseService.updateEntreprise(e);

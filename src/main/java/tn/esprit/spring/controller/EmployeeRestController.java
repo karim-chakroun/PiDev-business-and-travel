@@ -24,7 +24,7 @@ import tn.esprit.spring.services.IEmployeeService;
 public class EmployeeRestController {
 	@Autowired
 	IEmployeeService employeeService;
-	// http://localhost:8089/SpringMVC/employee/retrieve-all-employees
+	// http://localhost:8088/SpringMVC/employee/retrieve-all-employees
 		@ApiOperation(value = "Récupérer la liste des employees")
 		@GetMapping("/retrieve-all-employees")
 		public List<Employee> getEmployees() {
@@ -32,7 +32,7 @@ public class EmployeeRestController {
 			return listEmployees;
 		}
 
-		// http://localhost:8089/SpringMVC/employee/retrieve-employee/1
+		// http://localhost:8088/SpringMVC/employee/retrieve-employee/1
 		@ApiOperation(value = "Récupérer un employee par Id")
 		@GetMapping("/retrieve-employee/{employee-id}")
 //		@ApiResponses(value = {
@@ -49,13 +49,13 @@ public class EmployeeRestController {
 			return employeeService.addEmployee(e);
 		}
 
-		// http://localhost:8089/SpringMVC/employee/remove-employee/1
+		// http://localhost:8088/SpringMVC/employee/remove-employee/1
 		@DeleteMapping("/remove-employee/{employee-id}")
 		public void removeEmployee(@PathVariable("employee-id") int employeeId) {
 			employeeService.deleteEmployee(employeeId);
 		}
 
-		// http://localhost:8089/SpringMVC/employee/modify-employee
+		// http://localhost:8088/SpringMVC/employee/modify-employee
 		@PutMapping("/modify-employee")
 		public Employee modifyEmployee(@RequestBody Employee e) {
 			return employeeService.updateEmployee(e);
