@@ -1,5 +1,6 @@
 package tn.esprit.spring.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,24 @@ ProjectService projectService;
 			
 			
 		return  taskRepository.nbrTaskDoneByProject(idProject);	}
+
+	@Override
+//	@Scheduled(cron = "*/10 * * * * *" )
+	public void getProject() {
+		// TODO Auto-generated method stub
+		List<Project> projects = new ArrayList();
+		projects = (List<Project>) projectRepository.findAll();
+		for (Project p: projects)
+		{
+			
+		}
+		log.info("bonjour" +projects);
+		
+		
+		
+		
+	}
+	
 	
 
 }

@@ -40,7 +40,7 @@ public class TaskRestController {
 			List<Task> listTask= taskService.retrieveAllTasks();
 			return listTask;
 		}
-
+		
 		// http://localhost:8089/SpringMVC/task/retrieve-task/1
 		@ApiOperation(value = "Récupérer un task par Id")
 		@GetMapping("/retrieve-task/{task-id}")
