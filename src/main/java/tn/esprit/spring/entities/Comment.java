@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +31,7 @@ public class Comment  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idComment;
 	@NonNull private String body;
-
+	@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date dateComment;
 	@ToString.Exclude
 	@ManyToOne

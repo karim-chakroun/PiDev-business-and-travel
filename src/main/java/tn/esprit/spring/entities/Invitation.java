@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +32,7 @@ public class Invitation  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idInvitation;
 	@NonNull private String email;
-
+	@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date dateInvitation;
 	@ToString.Exclude
 	@ManyToOne

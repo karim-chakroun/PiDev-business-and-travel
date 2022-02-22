@@ -3,24 +3,47 @@ package tn.esprit.spring.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.Employee;
+import tn.esprit.spring.entities.Etat;
+import tn.esprit.spring.entities.Project;
 import tn.esprit.spring.entities.Task;
+import tn.esprit.spring.repository.EmployeeRepository;
+import tn.esprit.spring.repository.ParticipationProjectRepository;
+import tn.esprit.spring.repository.ProjectRepository;
 import tn.esprit.spring.repository.TaskRepository;
-
+@Slf4j
 @Service
+@EnableScheduling
 public class TaskServiceImpl implements TaskService{
 @Autowired
 TaskRepository taskRepository;
+@Autowired
+ProjectRepository projectRepository;
+@Autowired
+EmployeeRepository employeeRepository;
+@Autowired
+ParticipationProjectRepository participationProjectRepository;
+@Autowired
+ProjectService projectService;
+
 	@Override
 	public List<Task> retrieveAllTasks() {
 		// TODO Auto-generated method stub
+		
 		return (List<Task>) taskRepository.findAll();
 	}
 
 	@Override
-	public Task addTask(Task t) {
+	public Task addTask(Task t)
+	{
 		// TODO Auto-generated method stub
+		
+		
 		return taskRepository.save(t);
 	}
 
@@ -33,6 +56,7 @@ TaskRepository taskRepository;
 	@Override
 	public Task updateTask(Task t) {
 		// TODO Auto-generated method stub
+	
 		return taskRepository.save(t);
 	}
 
@@ -41,5 +65,68 @@ TaskRepository taskRepository;
 		// TODO Auto-generated method stub
 		return taskRepository.findById(id).get();
 	}
+
+	@Override
+	public void addAndassignTaskToEmployee(int idTask, int idEmployee) {
+		// TODO Auto-generated method stub
+		Employee e= employeeRepository.findById(idEmployee).orElse(null);
+		Task t= taskRepository.findById(idTask).orElse(null);
+		t.setEmployees(e);
+		int idproject= t.getProjects().getIdProject();
+		
+
+		taskRepository.save(t);
+	if(participationProjectRepository.nbreParticipationOfEmployee(idEmployee)==0)
+		 projectService.AcceptAndAssignProjectToEmployees(idproject, idEmployee);
+	else log.info("la participation existe deja");
+
+	}
+
+	@Override
+	public void addAndassignTaskToProject(Task t, int idProject) {
+		// TODO Auto-generated method stub
+		Project project= projectRepository.findById(idProject).orElse(null);
+		for(Project p: projectRepository.findAll())
+		{ if (project.getEtat()==Etat.todo||project.getEtat()==Etat.inprogress)
+		{t.setProjects(project);
+				taskRepository.save(t);}
+		else if (project.getEtat()==Etat.done)
+		log.info("le projet est terminé");
+		else if (project.getEtat()==Etat.rejected)
+			log.info("le projet est refusé");
+		else log.info("le projet n est pas encore accepte ");		
+		}
+		
+	}
+	//@Scheduled(cron = "*/60 * * * * *" )
+	@Override
+	public int nbreTaskOfProject(int idp) {
+		// TODO Auto-generated method stub
+		int nbre= taskRepository.nbrTaskByProject(idp);
+		
+		log.info("nbre"+nbre);
+		return nbre;
+	}
+	@Override
+	//@Scheduled(cron = "*/60 * * * * *" )
+
+	public int nbreTaskEtatOfProject(int idProject) {
+		
+		Project p =projectRepository.findById(idProject).orElse(null);
+
+	
+			//int idp=t.getProjects().getIdProject();
+		int nbreTaskDone=	taskRepository.nbrTaskDoneByProject(idProject);
+		if(nbreTaskDone==nbreTaskOfProject(idProject))
+		{
+			
+			p.setEtat(Etat.done);
+	
+		}
+		else p.setEtat(Etat.inprogress);
+			
+			
+		return  taskRepository.nbrTaskDoneByProject(idProject);	}
+	
 
 }

@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +40,7 @@ public class Employee  implements Serializable {
 
 	@NonNull private String FirstName, LastName;
 	@NonNull private float prime=0;
+	@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date dateNaissance;
 
 	@Enumerated(EnumType.STRING)

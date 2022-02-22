@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +35,7 @@ public class Evenement implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEvenement;
 	@NonNull private String nomEvenement, libelle;
+	@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date dateEvenement;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="evenements")

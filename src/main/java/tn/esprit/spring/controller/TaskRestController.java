@@ -52,12 +52,19 @@ public class TaskRestController {
 		public Task retrieveTask(@PathVariable("task-id") int taskId) {
 			return taskService.retrieveTask(taskId);
 		}
-
-		@PostMapping("/add-task")
-		public Task addTask(@RequestBody Task e) {
-			return taskService.addTask(e);
+		@ApiOperation(value = "affecter un employee a un task par Id")
+		//ajouter l employee et le projet dans la participation
+		//http://localhost:8089/SpringMVC/task/assign-taskEmployee/1
+		@PostMapping("/assign-taskEmployee/{idTask}/{idEmployee}")
+		public void AssignTaskEmployee(@PathVariable int idTask, @PathVariable int idEmployee) {
+			taskService.addAndassignTaskToEmployee(idTask, idEmployee);
 		}
-
+		//http://localhost:8089/SpringMVC/task/add-assign-taskProject/1
+				@PostMapping("/add-assign-taskProject/{idProject}")
+		public void addAssignTaskProject(@RequestBody Task t, @PathVariable int idProject) {
+					taskService.addAndassignTaskToProject(t, idProject);
+				}
+				
 		// http://localhost:8089/SpringMVC/task/remove-task/1
 		@DeleteMapping("/remove-task/{task-id}")
 		public void removeTask(@PathVariable("task-id") int taskId) {
