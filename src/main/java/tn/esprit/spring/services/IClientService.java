@@ -9,7 +9,7 @@ public interface IClientService {
 
 	List<Client> retrieveAllClients();
 
-	Client addClient(Client c);
+	Client addClient(Client c );
 
 	void deleteClient(Long id);
 
