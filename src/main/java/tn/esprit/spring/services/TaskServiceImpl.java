@@ -1,6 +1,5 @@
 package tn.esprit.spring.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,42 +108,25 @@ ProjectService projectService;
 		return nbre;
 	}
 	@Override
-	//@Scheduled(cron = "*/60 * * * * *" )
-
-	public int nbreTaskEtatOfProject(int idProject) {
-		
-		Project p =projectRepository.findById(idProject).orElse(null);
-
-	
-			//int idp=t.getProjects().getIdProject();
-		int nbreTaskDone=	taskRepository.nbrTaskDoneByProject(idProject);
-		if(nbreTaskDone==nbreTaskOfProject(idProject))
+@Scheduled(cron = "*/5 * * * * *" )
+// modifier l etat de projet si tous les taches sont done sinon in progress
+	public void nbreTaskEtatOfProject() {
+		List<Task> tasks=retrieveAllTasks();
+		for(Task t: tasks )
 		{
 			
-			p.setEtat(Etat.done);
-	
+			int idp= t.getProjects().getIdProject();
+			Project p = projectRepository.findById(idp).orElse(null);
+			
+			if(taskRepository.nbrTaskByProject(idp)==taskRepository.nbrTaskDoneByProject(idp))
+				p.setEtat(Etat.done);
+			else p.setEtat(Etat.inprogress);
+			projectRepository.save(p);
+			log.info("tasks"+taskRepository.nbrTaskByProject(idp));
 		}
-		else p.setEtat(Etat.inprogress);
-			
-			
-		return  taskRepository.nbrTaskDoneByProject(idProject);	}
+			}
 
-	@Override
-//	@Scheduled(cron = "*/10 * * * * *" )
-	public void getProject() {
-		// TODO Auto-generated method stub
-		List<Project> projects = new ArrayList();
-		projects = (List<Project>) projectRepository.findAll();
-		for (Project p: projects)
-		{
-			
-		}
-		log.info("bonjour" +projects);
-		
-		
-		
-		
-	}
+	
 	
 	
 

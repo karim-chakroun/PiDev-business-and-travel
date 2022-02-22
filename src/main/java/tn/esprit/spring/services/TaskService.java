@@ -19,8 +19,8 @@ public interface TaskService {
 	void addAndassignTaskToEmployee(int idTask, int idEmployee);
 	void addAndassignTaskToProject(Task t, int idProject);
 	int nbreTaskOfProject(int idp);
-	int nbreTaskEtatOfProject(int idProject);
-	void getProject();
+	void nbreTaskEtatOfProject();
+	
 	//List<Task> modifyEtat(Task t);
 	
 }
