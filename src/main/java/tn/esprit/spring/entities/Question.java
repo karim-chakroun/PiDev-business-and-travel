@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,10 @@ public class Question  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idQuestion;
 	@ToString.Exclude
+	private String Questiontext;
+	
+	@ToString.Exclude
+	@JsonIgnore
 	@ManyToOne
 	private Quiz quizs;
 	 @ToString.Exclude
