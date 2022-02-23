@@ -54,7 +54,7 @@ public class TaskRestController {
 		}
 		@ApiOperation(value = "affecter un employee a un task par Id")
 		//ajouter l employee et le projet dans la participation
-		//http://localhost:8089/SpringMVC/task/assign-taskEmployee/1
+		//http://localhost:8089/SpringMVC/task/assign-taskEmployee/1/2
 		@PostMapping("/assign-taskEmployee/{idTask}/{idEmployee}")
 		public void AssignTaskEmployee(@PathVariable int idTask, @PathVariable int idEmployee) {
 			taskService.addAndassignTaskToEmployee(idTask, idEmployee);

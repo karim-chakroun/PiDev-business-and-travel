@@ -3,6 +3,8 @@ package tn.esprit.spring.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import tn.esprit.spring.repository.ProjectRepository;
 import tn.esprit.spring.repository.TaskRepository;
 @Slf4j
 @Service
+@EnableScheduling
 public class ProjectServiceImpl implements ProjectService{
 @Autowired
 ProjectRepository projectRepository;
@@ -33,10 +36,13 @@ TaskRepository taskRepository;
 	}
 
 	@Override
-	public Project addProject(Project p) {
+	public void addProject(Project p) {
 		// TODO Auto-generated method stub
 		//p.setEtat(Etat.pending);
-		return projectRepository.save(p);
+		if(p.getDateDebut().before(p.getDateFin()))
+			projectRepository.save(p);
+		else log.info("la date finale est avantla date debut ");
+		
 	}
 
 	@Override
@@ -48,8 +54,8 @@ TaskRepository taskRepository;
 	@Override
 	public Project updateProject(Project p) {
 		// TODO Auto-generated method stub
-		int idProject=p.getIdProject();
-		p.setIntervenant(projectRepository.getNbreIntervenant(idProject));
+	//	int idProject=p.getIdProject();
+		//p.setIntervenant(projectRepository.getNbreIntervenant(idProject));
 		return projectRepository.save(p);
 	}
 
@@ -73,12 +79,13 @@ TaskRepository taskRepository;
 		p.setEtat(Etat.todo);
 		Employee e = employeeRepository.findById(idEmployee).orElse(null);
 		ParticipationProject pp= new ParticipationProject();
+		
 		pp.setEmployees(e);
 		pp.setProjects(p);
-	
-		if(participationProjectRepository.nbrParticip(idProject, idEmployee)>1 )
+		if(participationProjectRepository.nbrParticip(idProject, idEmployee)==1 )
 				log.info("la participation existe");
-		else	
+		else
+			
 			participationProjectRepository.save(pp);
 		//else
 	
@@ -108,13 +115,27 @@ TaskRepository taskRepository;
 		
 		int participation= participationProjectRepository.nbreParticipationOfEmployee(ide);
 		float prime= e.getPrime();
-		e.setPrime(prime+100*participation);
+		e.setPrime(100*participation);
 		employeeRepository.save(e);	}
+	//@Scheduled(cron = "*/5 * * * * *" )
+	@Override
+	public void updateNbreIntervenantProject() {
+		// TODO Auto-generated method stub
+		List<ParticipationProject> participation=  retrieveAllParticipations();
+		for (ParticipationProject pp :participation)
+		{
+			int idp= pp.getProjects().getIdProject();
+			Project p = projectRepository.findById(idp).orElse(null);
+			p.setIntervenant(NbreIntervenant(idp));
+			projectRepository.save(p);
+		}
+		
+	}
 
 	@Override
-	public void updateProject(int idp) {
+	public List<ParticipationProject> retrieveAllParticipations() {
 		// TODO Auto-generated method stub
-		
+		return (List<ParticipationProject>) participationProjectRepository.findAll();
 	}
 
 	

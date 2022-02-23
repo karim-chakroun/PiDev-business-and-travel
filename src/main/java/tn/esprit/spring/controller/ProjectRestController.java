@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.ParticipationProject;
 import tn.esprit.spring.entities.Project;
 import tn.esprit.spring.services.EntrepriseService;
 import tn.esprit.spring.services.IEmployeeService;
@@ -55,12 +55,12 @@ public class ProjectRestController {
 		public Project retrieveProject(@PathVariable("project-id") int projectId) {
 			return projectService.retrieveProject(projectId);
 		}
-
+//http://localhost:8089/SpringMVC/project/add-project
 		@PostMapping("/add-project")
-		public Project addProject(@RequestBody Project e) {
-			return projectService.addProject(e);
+		public void addProject(@RequestBody Project p) {
+			 projectService.addProject(p);
 		}
-		// http://localhost:8089/SpringMVC/project/assignProject/
+		// http://localhost:8089/SpringMVC/project/assignProject/3/1
 				@ApiOperation(value = "affecter un employee a un projet ")
 		@PostMapping("/assignProject/{project-id}/{employee-id}")
 		public void assignProjectToEmployee(@PathVariable("project-id") int projectId,@PathVariable("employee-id") int employeeId) {
@@ -91,4 +91,11 @@ public class ProjectRestController {
 		public Project modifyProject(@RequestBody Project p) {
 			return projectService.updateProject(p);
 		}
+		// http://localhost:8089/SpringMVC/project/retrieve-all-participations
+				@ApiOperation(value = "Récupérer la liste des participations")
+				@GetMapping("/retrieve-all-participations")
+				public List<ParticipationProject> getParticipations() {
+					List<ParticipationProject> listParticipation= projectService.retrieveAllParticipations();
+					return listParticipation;
+				}
 }

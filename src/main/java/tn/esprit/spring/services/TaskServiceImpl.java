@@ -76,9 +76,8 @@ ProjectService projectService;
 		
 
 		taskRepository.save(t);
-	if(participationProjectRepository.nbreParticipationOfEmployee(idEmployee)==0)
+	
 		 projectService.AcceptAndAssignProjectToEmployees(idproject, idEmployee);
-	else log.info("la participation existe deja");
 
 	}
 
@@ -108,7 +107,7 @@ ProjectService projectService;
 		return nbre;
 	}
 	@Override
-@Scheduled(cron = "*/5 * * * * *" )
+//@Scheduled(cron = "*/5 * * * * *" )
 // modifier l etat de projet si tous les taches sont done sinon in progress
 	public void nbreTaskEtatOfProject() {
 		List<Task> tasks=retrieveAllTasks();
@@ -117,7 +116,7 @@ ProjectService projectService;
 			
 			int idp= t.getProjects().getIdProject();
 			Project p = projectRepository.findById(idp).orElse(null);
-			
+			p.setNbreTask(taskRepository.nbrTaskByProject(idp));
 			if(taskRepository.nbrTaskByProject(idp)==taskRepository.nbrTaskDoneByProject(idp))
 				p.setEtat(Etat.done);
 			else p.setEtat(Etat.inprogress);

@@ -8,7 +8,7 @@ import tn.esprit.spring.entities.Project;
 public interface ProjectService {
 	List<Project> retrieveAllProjects();
 
-	Project addProject(Project p);
+	void addProject(Project p);
 
 	void deleteProject(int id);
 
@@ -19,5 +19,6 @@ public interface ProjectService {
 	void AcceptAndAssignProjectToEmployees(int idProject, int idEmployee);
 	void RecjectProject(int idp);
 	void AddPrimeToEmployee(int ide);
-	void updateProject(int idp);
+	void updateNbreIntervenantProject();
+	List<ParticipationProject> retrieveAllParticipations();
 }
