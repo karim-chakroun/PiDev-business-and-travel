@@ -20,7 +20,7 @@ public class ClientServiceImpl implements IClientService {
 		List<Client> listClient= clientRepository.findAll();
 		for(Client c:listClient)
 		{
-			log.info("Client:" + c.getNom()+ c.getPrenom());
+			//log.info("Client:" + c.getNom()+ c.getPrenom());
 		}
 		return listClient;
 	}

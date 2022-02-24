@@ -20,7 +20,7 @@ public class LoggingAspect {
 	@Before("execution(* tn.esprit.spring.services.*.*(..))")
 	public void logMethodEntry(JoinPoint joinPoint) {
 		String name = joinPoint.getSignature().getName();
-		log.info("In method : " + name + " : ");
+	//	log.info("In method : " + name + " : ");
 	}
 
 	@Around("execution(* tn.esprit.spring.services.*.*(..))")
@@ -28,24 +28,24 @@ public class LoggingAspect {
 		long start = System.currentTimeMillis();
 		Object obj = pjp.proceed();
 		long elapsedTime = System.currentTimeMillis() - start;
-		log.info("Method execution time: " + elapsedTime + " milliseconds.");
+		///log.info("Method execution time: " + elapsedTime + " milliseconds.");
 		return obj; 
 	}
 
 	@AfterReturning("execution(* tn.esprit.spring.services.*.*(..))")
 	public void logMethodExit1(JoinPoint joinPoint) {
 		String name = joinPoint.getSignature().getName();
-		log.info("Out of method without errors : " + name );
+		//log.info("Out of method without errors : " + name );
 	}
 	@AfterThrowing("execution(* tn.esprit.spring.services.*.*(..))")
 	public void logMethodExit2(JoinPoint joinPoint) {
 		String name = joinPoint.getSignature().getName();
-		log.error("Out of method with erros : " + name );
+	//	log.error("Out of method with erros : " + name );
 	}
 	@After("execution(* tn.esprit.spring.services.*.*(..))")
 	public void logMethodExit(JoinPoint joinPoint) {
 		String name = joinPoint.getSignature().getName();
-		log.info("Out of method (in all cases) : " + name );
+		//log.info("Out of method (in all cases) : " + name );
 	}
 
 
