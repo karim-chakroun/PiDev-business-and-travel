@@ -1,5 +1,7 @@
 package tn.esprit.spring.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -11,5 +13,16 @@ import tn.esprit.spring.entities.Employee;
 public interface EmployeeRepository extends CrudRepository <Employee, Integer> {
 		//@Query("Select COUNT(*) FROM Client c where c.genre = :genre")
 	//int nbreByGenre(@Param("genre") Genre genre);
+	
+	@Query(value="SELECT MAX(nbre_projet) FROM `employee`",nativeQuery = true)
+	// le nbre de projet le plus grand 
+		int getMaxProject();
+	@Query(value="SELECT * FROM `employee` e where e.nbre_projet=:nbreProjet ",nativeQuery = true)
+	//employee qui a le nbre de projet le plus grand 
+		List<Employee> getEmployeeMaxProject(@Param("nbreProjet") int nbreProjet);
+	@Query(value="SELECT id_employee FROM employee e INNER JOIN project p WHERE p.specialite=e.specialite AND p.id_project=:idProject",nativeQuery = true)
+	//employee qui a le nbre de projet le plus grand 
+		List<Integer> getEmployeeProjectSpecialite(@Param("idProject") int idProject);
+	
 
 }

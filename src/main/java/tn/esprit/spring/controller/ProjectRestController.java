@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.ParticipationProject;
 import tn.esprit.spring.entities.Project;
 import tn.esprit.spring.services.EntrepriseService;
@@ -37,13 +38,24 @@ public class ProjectRestController {
 			List<Project> listProject= projectService.retrieveAllProjects();
 			return listProject;
 		}
-		//http://localhost:8089/SpringMVC/project/retrieve-nbreIntervenant/1
-		@ApiOperation(value = "udpdate nbre intervenant dans un projet et recuperer le nbre d'intervenant par projet ")
-		@GetMapping("/retrieve-nbreIntervenant/{idProject}")
-		public int getNbreIntervenant(@PathVariable("idProject") int projectId) {
-			return projectService.NbreIntervenant(projectId);
+		//http://localhost:8089/SpringMVC/project/retrieve-getEmployeeStar
+		@ApiOperation(value = "retourner l'employee qui a participer le plus ds des projets ")
+		@GetMapping("/retrieve-getEmployeeStar")
+		public List<Employee> getEmployeeStar() {
+			return (List<Employee>)projectService.getEmployeeStar();
 		}
-
+		//http://localhost:8089/SpringMVC/project/getEmployeeForProject/1
+				@ApiOperation(value = "getEmployeeForProject")
+				@GetMapping("/getEmployeeForProject/{idProject}")
+				public List<Employee> getEmployeeForProject(@PathVariable("idProject") int projectId) {
+					return( List<Employee>)projectService.getEmployeeForProject(projectId);
+				}
+				//http://localhost:8089/SpringMVC/project/retrieve-nbreIntervenant/1
+				@ApiOperation(value = "udpdate nbre intervenant dans un projet et recuperer le nbre d'intervenant par projet ")
+				@GetMapping("/retrieve-nbreIntervenant/{idProject}")
+				public int getNbreIntervenant(@PathVariable("idProject") int projectId) {
+					return projectService.NbreIntervenant(projectId);
+				}
 		// http://localhost:8089/SpringMVC/project/retrieve-project/1
 		@ApiOperation(value = "Récupérer un project par Id")
 		@GetMapping("/retrieve-project/{project-id}")
@@ -56,9 +68,9 @@ public class ProjectRestController {
 			return projectService.retrieveProject(projectId);
 		}
 //http://localhost:8089/SpringMVC/project/add-project
-		@PostMapping("/add-project")
-		public void addProject(@RequestBody Project p) {
-			 projectService.addProject(p);
+		@PostMapping("/add-project/{idEntreprise}")
+		public void addProject(@RequestBody Project p,@PathVariable("idEntreprise") int idEntreprise) {
+			 projectService.addProject(p,idEntreprise);
 		}
 		// http://localhost:8089/SpringMVC/project/assignProject/3/1
 				@ApiOperation(value = "affecter un employee a un projet ")

@@ -42,6 +42,9 @@ public class Project  implements Serializable{
 	@Enumerated(EnumType.STRING)
 	
 	private Etat etat= Etat.pending;
+@Enumerated(EnumType.STRING)
+	
+	private Specialite specialite;
 	
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="projects")

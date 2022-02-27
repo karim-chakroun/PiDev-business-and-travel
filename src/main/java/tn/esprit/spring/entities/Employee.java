@@ -40,11 +40,14 @@ public class Employee  implements Serializable {
 
 	@NonNull private String FirstName, LastName;
 	@NonNull private float prime=0;
+	@NonNull private int nbreProjet=0;
 	@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date dateNaissance;
 
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
+	@Enumerated(EnumType.STRING)
+	private Specialite specialite;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Comment> comments;

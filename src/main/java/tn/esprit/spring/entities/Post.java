@@ -38,5 +38,5 @@ public class Post  implements Serializable{
 		private Set<Comment> comments;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="posts")
-		private Set<Rating> ratings;
+		private Set<Ratings> ratings;
 }

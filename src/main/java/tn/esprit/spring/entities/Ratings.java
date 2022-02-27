@@ -24,7 +24,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Rating  implements Serializable{
+public class Ratings  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
