@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,24 +41,12 @@ public class Entreprise   implements Serializable{
 
 	@Enumerated(EnumType.STRING)
 	private Domain domain;
-	/* @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<Invitation> invitations;
+	 
 	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<Project> projects;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<Quiz> quizs;*/
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<Voyage> voyages;
-	/*@ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<ParticipationEvenement> participationEvenements;
-	 @ToString.Exclude
-		@ManyToOne
-		private User users;*/
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprise")
+		private Set<Employee> employees;
 	 
 	 
 }

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import tn.esprit.spring.entities.Employee;
+import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.Participation;
 import tn.esprit.spring.entities.Voyage;
 import tn.esprit.spring.services.IVoyageService;
 
@@ -57,4 +60,14 @@ public class VoyageRestController {
 		public Voyage retrieveVoyage(@PathVariable("voyage-id") int voyageId) {
 			return voyageService.retrieveVoyage(voyageId);
 		}
+		// http://localhost:8089/SpringMVC/voyage/add-voyage	
+				@PostMapping("/add-participation/{voyageId}/{employeeId}")
+				public void addPartcipation(@PathVariable("voyageId") int voyageId,@PathVariable("employeeId") int employeeId) throws Exception {
+					 voyageService.addParticipation(voyageId, employeeId);
+				}
+				
+				@GetMapping("/retrieve-employeeaffectedbyentreprise/{entrepriseId}")
+				public List<Employee> findEmployeeAffectedToVoyageByEntrepriseId(@PathVariable("entrepriseId") int entrepriseId ){
+					return voyageService.findEmployeeAffectedToVoyageByEntrepriseId(entrepriseId);
+				}
 }

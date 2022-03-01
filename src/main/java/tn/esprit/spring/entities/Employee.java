@@ -10,9 +10,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,25 +48,12 @@ public class Employee  implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
-	 /*@ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Comment> comments;*/
-	
-	/* @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<FeedBack> feedBacks;*/
 
 	 @ToString.Exclude
+	 @JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Participation> participation;
-	 /*@ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Complain> complains;*/
-	
-	 /*@ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<ParticipationProject> participationProjects;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Task> tasks;*/
+	 @ManyToOne
+	 private Entreprise entreprise;
+
 }
