@@ -43,7 +43,7 @@ public class Project  implements Serializable{
 	@NonNull private java.util.Date dateDebut, dateFin;
 	@NonNull private float budget;
 	@NonNull private int intervenant=0;
-	@NonNull private int nbreTask=0;
+	@NonNull private int nbreTaskInTime=0, nbreTaskLate=0,nbreTask=0;
 	@Enumerated(EnumType.STRING)
 	
 	private Etat etat= Etat.pending;

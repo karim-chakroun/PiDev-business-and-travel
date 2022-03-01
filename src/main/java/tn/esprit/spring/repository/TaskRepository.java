@@ -16,4 +16,8 @@ public interface TaskRepository extends CrudRepository <Task,Integer>{
 	//nbre des task done par projet
 		int nbrTaskDoneByProject(@Param("idProject") int idProject);
 	
+	@Query(value="select  COUNT(*) FROM task where projects_id_project=:idProject AND etat_remise='inTime'  ",nativeQuery = true)
+	//nbre des task intime par projet
+		int nbrTaskInTimeByProject(@Param("idProject") int idProject);
+	
 }

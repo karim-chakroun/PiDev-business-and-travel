@@ -1,6 +1,12 @@
 package tn.esprit.spring.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -110,4 +119,30 @@ public class ProjectRestController {
 					List<ParticipationProject> listParticipation= projectService.retrieveAllParticipations();
 					return listParticipation;
 				}
+				// http://localhost:8089/SpringMVC/project/export/excel
+	
+				 @GetMapping("/export/excel")
+				    public void exportToExcel(HttpServletResponse response) throws IOException {
+				       
+					 response.setContentType("text/csv");
+				       
+				          String headerKey = "Content-Disposition";
+				        String headerValue = "attachment; filename=project.csv";
+				        response.setHeader(headerKey, headerValue);
+				         
+				        List<Project> listProjects = projectService.retrieveAllProjects();
+				 
+				        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+				        String[] csvHeader = {"Project ID", "description", "nom", "dateDebut", "dateFin","intervenant","nbreTaskInTime","nbreTaskLate","nbreTask","etat","specialite","budget"};
+				        String[] nameMapping = {"idProject", "description", "nom","dateDebut", "dateFin","intervenant","nbreTaskInTime","nbreTaskLate","nbreTask","etat","specialite","budget"};
+				         
+				        csvWriter.writeHeader(csvHeader);
+				         
+				        for (Project project : listProjects) {
+				            csvWriter.write(project, nameMapping);
+				        }
+				         
+				        csvWriter.close();
+				
+				    }  
 }

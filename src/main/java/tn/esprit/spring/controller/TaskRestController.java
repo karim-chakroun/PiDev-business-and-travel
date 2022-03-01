@@ -76,7 +76,7 @@ public class TaskRestController {
 		public Task modifyTask(@RequestBody Task p) {
 			return taskService.updateTask(p);
 		}
-		// http://localhost:8089/SpringMVC/task/modify-task
+		// http://localhost:8089/SpringMVC/task/end-task/1
 		@PutMapping("/end-task/{task-id}")
 		public void EndTask(@PathVariable("task-id") int taskId) {
 			 taskService.EndTask(taskId);

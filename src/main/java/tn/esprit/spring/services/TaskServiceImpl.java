@@ -139,6 +139,29 @@ ProjectService projectService;
 		    task.setEtatRemise(EtatRemise.delayed);
 		taskRepository.save(task);
 	}
+	//retourner le nbre de tache in time of project
+//	@Scheduled(cron = "*/5 * * * * *" )
+public	void getNbreTacheInTimeOfProject()
+{	List<Task> tasks=retrieveAllTasks();
+for (Task task: tasks)
+{
+int idproject=task.getProjects().getIdProject();
+Project p= projectRepository.findById(idproject).orElse(null);
+int nbreTaskInTime= taskRepository.nbrTaskInTimeByProject(idproject);
+int nbreTask= taskRepository.nbrTaskByProject(idproject);
+
+if (nbreTaskInTime==nbreTask)
+{
+p.setNbreTaskInTime(nbreTaskInTime);	
+}
+else if (nbreTaskInTime<nbreTask || task.getEtatRemise()!=null){
+	p.setNbreTaskInTime(nbreTaskInTime);
+	p.setNbreTaskLate(nbreTask-nbreTaskInTime);
+}
+projectRepository.save(p);
+log.info("tasks"+taskRepository.nbrTaskByProject(idproject));
+}
+	}
 
 	
 	
