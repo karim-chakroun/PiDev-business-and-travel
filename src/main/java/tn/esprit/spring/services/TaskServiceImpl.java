@@ -1,5 +1,6 @@
 package tn.esprit.spring.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Etat;
+import tn.esprit.spring.entities.EtatRemise;
 import tn.esprit.spring.entities.Project;
 import tn.esprit.spring.entities.Task;
 import tn.esprit.spring.repository.EmployeeRepository;
@@ -124,6 +126,19 @@ ProjectService projectService;
 			log.info("tasks"+taskRepository.nbrTaskByProject(idp));
 		}
 			}
+
+	@Override
+	public void EndTask(int idTask) {
+		// TODO Auto-generated method stub
+		Task task = taskRepository.findById(idTask).orElse(null);
+		Date dateRemise=new Date (System.currentTimeMillis());
+		task.setDateRemise(dateRemise);
+		if (task.getDateRemise().before(task.getDateFinTask()))
+			task.setEtatRemise(EtatRemise.inTime);
+		else 
+		    task.setEtatRemise(EtatRemise.delayed);
+		taskRepository.save(task);
+	}
 
 	
 	

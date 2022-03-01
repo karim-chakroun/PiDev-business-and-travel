@@ -10,8 +10,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,21 +43,38 @@ public class Entreprise   implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Domain domain;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<Invitation> invitations;
 	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
+		@JsonIgnore
+
+		@ManyToMany(cascade = CascadeType.PERSIST)
 		private Set<Project> projects;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<Quiz> quizs;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<Voyage> voyages;
+	 @ToString.Exclude
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
+		private Set<Employee> employees;
 	@ToString.Exclude
+	@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<ParticipationEvenement> participationEvenements;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@ManyToOne
 		private User users;
 	 

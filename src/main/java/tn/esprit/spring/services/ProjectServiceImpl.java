@@ -35,6 +35,8 @@ TaskRepository taskRepository;
 IEmployeeService employeeService;
 @Autowired
 EntrepriseRepository entrepriseRepository;
+@Autowired
+EntrepriseService entrepriseService;
 	@Override
 	public List<Project> retrieveAllProjects() {
 		// TODO Auto-generated method stub
@@ -42,29 +44,42 @@ EntrepriseRepository entrepriseRepository;
 	}
 
 	@Override
-	public void addProject(Project p, int idEntreprise) {
+	public void addProject(Project p, List<Integer> idEntreprise) {
 		// TODO Auto-generated method stub
 		//p.setEtat(Etat.pending);
-		Entreprise entreprise= entrepriseRepository.findById(idEntreprise).orElse(null);
+	//	Entreprise entreprise= entrepriseRepository.findById(idEntreprise).orElse(null);
 		if(p.getDateDebut().before(p.getDateFin()))
-		{p.setEntreprises(entreprise);
+		{
 			projectRepository.save(p);
 		}
 		else log.info("la date finale est avantla date debut ");
+		for (int ide : idEntreprise) {
+			Entreprise entreprise = entrepriseRepository.findById(ide).orElse(null);
+			entreprise.getProjects().add(p);
+			entrepriseRepository.save(entreprise);
+		}
 		
 	}
 
 	@Override
 	public void deleteProject(int id) {
 		// TODO Auto-generated method stub
+		projectRepository.deleteProjectAssociation(id);
 		projectRepository.deleteById(id);
+	
+		
 	}
 
 	@Override
-	public Project updateProject(Project p) {
+	public Project updateProject(Project p,List<Integer> idEntreprise) {
 		// TODO Auto-generated method stub
 	//	int idProject=p.getIdProject();
 		//p.setIntervenant(projectRepository.getNbreIntervenant(idProject));
+		for (int ide : idEntreprise) {
+			Entreprise entreprise = entrepriseRepository.findById(ide).orElse(null);
+			entreprise.getProjects().add(p);
+			entrepriseRepository.save(entreprise);
+		}
 		return projectRepository.save(p);
 	}
 
@@ -184,7 +199,7 @@ else employeesFilter.addAll(employeeSpecialite);
 return employeesFilter;
 
 	}
-	@Scheduled(cron = "*/5 * * * * *" )
+//	@Scheduled(cron = "*/5 * * * * *" )
 	public List<Integer> sizeList()
 	{List<Integer> size=new ArrayList();
 		for (Project p: retrieveAllProjects())

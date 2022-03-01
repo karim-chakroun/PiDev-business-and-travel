@@ -69,7 +69,7 @@ public class ProjectRestController {
 		}
 //http://localhost:8089/SpringMVC/project/add-project
 		@PostMapping("/add-project/{idEntreprise}")
-		public void addProject(@RequestBody Project p,@PathVariable("idEntreprise") int idEntreprise) {
+		public void addProject(@RequestBody Project p,@PathVariable("idEntreprise") List<Integer> idEntreprise) {
 			 projectService.addProject(p,idEntreprise);
 		}
 		// http://localhost:8089/SpringMVC/project/assignProject/3/1
@@ -99,9 +99,9 @@ public class ProjectRestController {
 		}
 
 		// http://localhost:8089/SpringMVC/project/modify-project
-		@PutMapping("/modify-project")
-		public Project modifyProject(@RequestBody Project p) {
-			return projectService.updateProject(p);
+		@PutMapping("/modify-project/{idEntreprise}")
+		public Project modifyProject(@RequestBody Project p,@PathVariable("idEntreprise") List<Integer> idEntreprise) {
+			return projectService.updateProject(p,idEntreprise);
 		}
 		// http://localhost:8089/SpringMVC/project/retrieve-all-participations
 				@ApiOperation(value = "Récupérer la liste des participations")

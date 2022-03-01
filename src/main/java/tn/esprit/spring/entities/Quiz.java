@@ -33,10 +33,13 @@ public class Quiz  implements Serializable{
 	private int idQuiz;
 	@JsonIgnore
 	@ToString.Exclude
+
 	@ManyToOne
 	private Entreprise entreprises;
 	
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quizs")
 		private Set<Question> questions;
 }

@@ -9,11 +9,11 @@ import tn.esprit.spring.entities.Project;
 public interface ProjectService {
 	List<Project> retrieveAllProjects();
 
-	void addProject(Project p, int idEntreprise);
+	void addProject(Project p, List<Integer> idEntreprise);
 
 	void deleteProject(int id);
 
-	Project updateProject(Project p);
+	Project updateProject(Project p,List<Integer> idEntreprise);
 
 	Project retrieveProject(int id);
 	int NbreIntervenant(int idProject);

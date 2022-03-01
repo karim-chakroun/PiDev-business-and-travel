@@ -3,6 +3,7 @@ package tn.esprit.spring.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,13 +38,26 @@ public class Task  implements Serializable{
 	private int idTask;
 	@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date dateTask= new Date(System.currentTimeMillis());
+	@Temporal (TemporalType.DATE)
+
+	@NonNull private java.util.Date dateFinTask;
+	@Temporal (TemporalType.DATE)
+
+	@NonNull private java.util.Date dateRemise=null;
 	@NonNull private String nom, description;
 	@Enumerated(EnumType.STRING)
 	private Etat etat=Etat.todo;
+	@Enumerated(EnumType.STRING)
+	private EtatRemise etatRemise;
 	@ToString.Exclude
+	@JsonIgnore
+
 	@ManyToOne
 	private Project projects;
 	@ToString.Exclude
+	@JsonIgnore
+
 	@ManyToOne
 	private Employee employees;
+	
 }

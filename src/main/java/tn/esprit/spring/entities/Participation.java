@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,9 +39,13 @@ public class Participation  implements Serializable{
 	@ManyToOne
 	private Employee employees;
 	@ToString.Exclude
+	@JsonIgnore
+
 	@ManyToOne
 	private Voyage voyages;
 	@ToString.Exclude
+	@JsonIgnore
+
 	@ManyToOne
 	private Entreprise entreprises;
 }

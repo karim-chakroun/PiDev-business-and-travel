@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +39,8 @@ public class User  implements Serializable{
 	@ManyToMany(cascade = CascadeType.ALL)
     private Set<Role> roles;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="users")
 		private Set<Entreprise> entreprises;
 

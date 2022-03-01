@@ -16,6 +16,7 @@ public interface TaskService {
 	Task updateTask(Task t);
 
 	Task retrieveTask(int id);
+	void EndTask(int idTask);
 	void addAndassignTaskToEmployee(int idTask, int idEmployee);
 	void addAndassignTaskToProject(Task t, int idProject);
 	int nbreTaskOfProject(int idp);

@@ -44,9 +44,9 @@ public class EmployeeRestController {
 			return employeeService.retrieveEmployee(employeeId);
 		}
 
-		@PostMapping("/add-employee")
-		public Employee addClient(@RequestBody Employee e) {
-			return employeeService.addEmployee(e);
+		@PostMapping("/add-employee/{identreprise}")
+		public Employee addClient(@RequestBody Employee e,@PathVariable("identreprise") int identreprise) {
+			return employeeService.addEmployee(e,identreprise);
 		}
 
 		// http://localhost:8088/SpringMVC/employee/remove-employee/1
@@ -56,8 +56,8 @@ public class EmployeeRestController {
 		}
 
 		// http://localhost:8088/SpringMVC/employee/modify-employee
-		@PutMapping("/modify-employee")
-		public Employee modifyEmployee(@RequestBody Employee e) {
-			return employeeService.updateEmployee(e);
+		@PutMapping("/modify-employee/{identreprise}")
+		public Employee modifyEmployee(@RequestBody Employee e,@PathVariable("identreprise") int identreprise) {
+			return employeeService.updateEmployee(e, identreprise);
 		}
 }

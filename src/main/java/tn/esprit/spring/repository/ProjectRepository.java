@@ -1,5 +1,8 @@
 package tn.esprit.spring.repository;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +19,8 @@ public interface ProjectRepository extends CrudRepository <Project, Integer>{
 	@Query(value="SELECT COUNT(projects_id_project) FROM `participation_project` WHERE employees_id_employee=:idEmployee ",nativeQuery = true)
 	//nbre de projet dans un employee bien determine
 		int getnbreProjetOfEmployee(@Param("idEmployee") int idEmployee);
-
+	 @Modifying
+	    @Transactional
+	@Query(value="	DELETE FROM entreprise_projects WHERE projects_id_project=:idProject ",nativeQuery = true)
+		void deleteProjectAssociation(@Param("idProject") int idProject);
 }
