@@ -32,9 +32,10 @@ public class Response  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idResponse;
+	private int BodyResponse;
+	private boolean Correct;
 	@ToString.Exclude
 	@JsonIgnore
-
 	@ManyToOne
 	private Question questions;
 

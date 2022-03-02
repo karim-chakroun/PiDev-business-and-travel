@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.services.IEmployeeService;
 

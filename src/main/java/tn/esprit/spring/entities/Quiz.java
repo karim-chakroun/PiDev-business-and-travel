@@ -31,6 +31,10 @@ public class Quiz  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idQuiz;
+	private String nameQuiz;
+	private int numQuestion;
+	private int Score;
+	private Type TypeQuiz;
 	@JsonIgnore
 	@ToString.Exclude
 
@@ -42,4 +46,7 @@ public class Quiz  implements Serializable{
 
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quizs")
 		private Set<Question> questions;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="quiz")
+		private Set<Result> results;
 }

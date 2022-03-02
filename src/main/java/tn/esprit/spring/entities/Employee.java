@@ -73,6 +73,9 @@ public class Employee  implements Serializable {
 
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Complain> complains;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+		private Set<Result> results ;
 	
 	 @ToString.Exclude
 		@JsonIgnore

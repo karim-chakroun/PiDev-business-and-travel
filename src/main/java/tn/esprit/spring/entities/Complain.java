@@ -31,15 +31,19 @@ import lombok.ToString;
 public class Complain  implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idComplain;
 	@NonNull private String body;
+	@NonNull private int SentimentType ;
 	@Temporal (TemporalType.DATE)
+
 	@NonNull private java.util.Date dateComplain;
 	@ToString.Exclude
 	@JsonIgnore
-
 	@ManyToOne
+	
 	private Employee employees;
+	
 }

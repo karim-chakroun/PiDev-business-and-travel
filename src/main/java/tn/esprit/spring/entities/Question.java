@@ -36,8 +36,10 @@ public class Question  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idQuestion;
 	@ToString.Exclude
+	private String Questiontext;
+	private Type typeQuestion;
+	@ToString.Exclude
 	@JsonIgnore
-
 	@ManyToOne
 	private Quiz quizs;
 	 @ToString.Exclude

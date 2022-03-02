@@ -2,7 +2,6 @@ package tn.esprit.spring.services;
 
 import java.util.List;
 
-import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Employee;
 
 public interface IEmployeeService {
@@ -15,5 +14,6 @@ public interface IEmployeeService {
 	Employee updateEmployee(Employee e, int idEntreprise);
 
 	Employee retrieveEmployee(int id);
+	
 
 }

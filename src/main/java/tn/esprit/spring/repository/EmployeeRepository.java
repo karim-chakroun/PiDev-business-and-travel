@@ -11,8 +11,8 @@ import tn.esprit.spring.entities.Employee;
 
 @Repository
 public interface EmployeeRepository extends CrudRepository <Employee, Integer> {
-		//@Query("Select COUNT(*) FROM Client c where c.genre = :genre")
-	//int nbreByGenre(@Param("genre") Genre genre);
+//	@Query("SELECT e FROM Employee e JOIN Complains c ON e.idEmployee=c.employee.idEmployee ORDER BY c.SentimentType")
+//	List<Employee> EmployeeBySentiment();
 	
 	@Query(value="SELECT MAX(nbre_projet) FROM `employee`",nativeQuery = true)
 	// le nbre de projet le plus grand 
