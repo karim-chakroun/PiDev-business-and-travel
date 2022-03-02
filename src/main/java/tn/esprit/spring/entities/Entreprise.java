@@ -29,7 +29,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class Entreprise   implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -37,16 +37,12 @@ public class Entreprise   implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEntreprise;
 	
-	@NonNull private String nomEntreprise, CodeTva, email,password;
-	@NonNull private int numTel;
+	 private String nomEntreprise, CodeTva, email,password;
+	 private int numTel;
 
 	@Enumerated(EnumType.STRING)
 	private Domain domain;
-	 @ToString.Exclude
-		@JsonIgnore
-
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<Invitation> invitations;
+	
 	 @ToString.Exclude
 		@JsonIgnore
 
