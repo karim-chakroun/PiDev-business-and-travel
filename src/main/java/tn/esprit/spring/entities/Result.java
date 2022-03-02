@@ -1,17 +1,16 @@
 package tn.esprit.spring.entities;
 
-import java.io.Serializable;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+
+import java.util.Date;
+
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,27 +22,34 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
-//@NoArgsConstructor
-@RequiredArgsConstructor
-public class Question  implements Serializable{
+@NoArgsConstructor
+
+@Entity
+public class Result {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idQuestion;
-	@ToString.Exclude
-	private String Questiontext;
-	private Type typeQuestion;
-	@ToString.Exclude
-	@JsonIgnore
+	private int idResult;
+	
+	private Integer Score;
+	
+	@Temporal(TemporalType.DATE)
+	private Date creationdate;
+	
 	@ManyToOne
-	private Quiz quizs;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="questions")
-		private Set<Response> responses;
+	
+	private Employee employee;
+	
+	@ManyToOne
+	
+	private Quiz quiz;
+	
+	
+	
 	
 }

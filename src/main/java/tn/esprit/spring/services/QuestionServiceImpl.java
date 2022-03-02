@@ -1,6 +1,7 @@
 package tn.esprit.spring.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Complain;
 import tn.esprit.spring.entities.Question;
+import tn.esprit.spring.entities.Quiz;
 import tn.esprit.spring.repository.QuestionRepository;
 import tn.esprit.spring.repository.QuizRepository;
 
@@ -56,6 +58,17 @@ public class QuestionServiceImpl implements IQuestionService {
 	public void deleteQuestion(Integer id) {
 		// TODO Auto-generated method stub
 		questionRepository.deleteById(id);
+	}
+
+	@Override
+	public Set<Question> findQuestionbyQuiz(Integer id) {
+		// TODO Auto-generated method stub
+		Quiz q=quizRepository.findById(id).get();
+		
+		 for (Question question : q.getQuestions()) {
+			log.info("this is the body: "+question.getQuestiontext());
+		}
+		 return q.getQuestions();
 	}
 
 }

@@ -1,6 +1,7 @@
 package tn.esprit.spring.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,6 +55,11 @@ public class QuestionContoller {
 		log.info("delete with success");
 		
 	}
-	
+	@GetMapping("/getquestionbyQuiz")
+	public Set<Question> getQuestionByQuiz(Integer id)
+	{
+		return questionService.findQuestionbyQuiz(id);
+		
+	}
 	
 }

@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -36,12 +37,19 @@ public class Quiz  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idQuiz;
 	private String nameQuiz;
+	private int numQuestion;
+	private int Score;
+	private Type TypeQuiz;
 	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne
 	private Entreprise entreprises;
 	
+	
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quizs")
 		private Set<Question> questions;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="quiz")
+		private Set<Result> results;
 }

@@ -33,7 +33,7 @@ public class Complain  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idComplain;
 	@NonNull private String body;
-
+	@NonNull private int SentimentType ;
 	@NonNull private java.util.Date dateComplain;
 	@ToString.Exclude
 	@JsonIgnore

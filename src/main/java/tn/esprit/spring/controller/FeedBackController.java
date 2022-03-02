@@ -48,7 +48,7 @@ public class FeedBackController {
 		
 	}
 	@DeleteMapping("/deletefeedback/{comp_id}")
-	public void modifyFeedBack(@PathVariable("comp_id") Integer id)
+	public void deleteFeedBack(@PathVariable("comp_id") Integer id)
 	{
 		backService.deleteFeedback(id);
 		log.info("delete with success");

@@ -1,5 +1,6 @@
 package tn.esprit.spring.controller;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Complain;
+import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.services.IComplainService;
 
 @RestController
@@ -37,6 +39,13 @@ public class ComplainContoller {
 	public List<Complain> allComplains()
 	{
 		return complainService.getAllComplains();
+		
+	}
+	
+	@GetMapping("/Employeebysentiment")
+	public LinkedHashSet<Employee> getemployeesbysentiment()
+	{
+		return complainService.listemployeebyorderbysentiment();
 		
 	}
 	

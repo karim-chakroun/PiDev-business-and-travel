@@ -54,4 +54,23 @@ public class QuizContoller {
 		log.info("delete with success");
 		
 	}
+	@GetMapping("/assignquestiontoquiz/{idquestion}/{idquiz}")
+	public void assignquestionbyid(@PathVariable("idquestion") Integer questionid,
+			                             @PathVariable("idquiz") Integer quizid)
+	{
+		 quizInterface.assignQuestionToQuizById(questionid,quizid);
+		
+	}
+	@GetMapping("/makequiz/{idquiz}")
+	public Quiz makequiz(@PathVariable("idquiz") Integer quizid)
+	{
+		 return quizInterface.makeQuizaumatique(quizid);
+		
+	}
+	@PostMapping("/result/{idemp}")
+	public int getresult(@RequestBody Quiz q,@PathVariable("idemp")Integer Id )
+	{
+		 return quizInterface.getResult(q,Id);
+		
+	}
 }

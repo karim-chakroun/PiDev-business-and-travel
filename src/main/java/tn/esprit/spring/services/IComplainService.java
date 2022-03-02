@@ -1,8 +1,10 @@
 package tn.esprit.spring.services;
 
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import tn.esprit.spring.entities.Complain;
+import tn.esprit.spring.entities.Employee;
 
 public interface IComplainService {
 	
@@ -11,4 +13,6 @@ public interface IComplainService {
 	 void deleteComplain(Integer id);
 	 List<Complain> getAllComplains();
 	 Complain getComplain(Integer id);
+	 int analyse(String Body);
+	 LinkedHashSet<Employee> listemployeebyorderbysentiment();
 }

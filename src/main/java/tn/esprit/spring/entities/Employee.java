@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -56,6 +57,9 @@ public class Employee  implements Serializable {
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Complain> complains;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+		private Set<Result> results ;
 	
 	
 }

@@ -1,0 +1,29 @@
+package tn.esprit.spring.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.Response;
+import tn.esprit.spring.entities.Result;
+import tn.esprit.spring.repository.ResultRepository;
+
+@Service
+@Slf4j
+public class ResultServiceImpl implements IResultService {
+	
+	
+	@Autowired
+	ResultRepository resultRepository;
+	@Override
+	public List<Result> GetAllResults() {
+	List<Result> lco = (List<Result>) resultRepository.findAll();
+	 for (Result result : lco) {
+		log.info("this is the Result ");
+	}
+	 return lco;
+	}
+
+}
