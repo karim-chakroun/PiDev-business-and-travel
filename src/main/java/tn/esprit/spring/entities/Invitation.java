@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,18 +25,17 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@RequiredArgsConstructor
+
 public class Invitation  implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idInvitation;
-	 private String email;
-	 private String phone;
-	 private String fullName;
-	 private String status;
-
+	private String email;
+	private String phone;
+	private String fullName;
+	private String status;
 	@Temporal (TemporalType.DATE)
-	 private java.util.Date dateInvitation;
+	private java.util.Date dateInvitation;
 	
 }
