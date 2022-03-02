@@ -27,18 +27,18 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class Invitation  implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idInvitation;
-	@NonNull private String email;
-	@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date dateInvitation;
-	@ToString.Exclude
-	@JsonIgnore
+	 private String email;
+	 private String phone;
+	 private String fullName;
+	 private String status;
 
-	@ManyToOne
-	private Entreprise entreprises;
+	@Temporal (TemporalType.DATE)
+	 private java.util.Date dateInvitation;
+	
 }
