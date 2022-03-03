@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Etat;
+import tn.esprit.spring.entities.ParticipationEvenement;
 import tn.esprit.spring.entities.ParticipationProject;
 import tn.esprit.spring.entities.Project;
 import tn.esprit.spring.entities.Task;
@@ -116,6 +117,7 @@ TaskRepository taskRepository;
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	
 

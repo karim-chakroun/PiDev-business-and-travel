@@ -3,6 +3,7 @@ package tn.esprit.spring.services;
 import java.util.List;
 
 import tn.esprit.spring.entities.Evenement;
+import tn.esprit.spring.entities.ParticipationEvenement;
 
 public interface EvenementService {
 	List<Evenement> retrieveAllEvenements();
@@ -15,5 +16,7 @@ public interface EvenementService {
 
 	Evenement retrieveEvenement(int id);
 	void AssignEntrepriseToEvenement(int ide, int idevenement);
-
+	void updateNbreIntervenantEvenement();
+	List<ParticipationEvenement> retrieveAllParticipationEvenements();
+	List<Evenement> getEvenementForEntreprise(int ide);
 }

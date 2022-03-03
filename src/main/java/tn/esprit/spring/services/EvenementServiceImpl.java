@@ -1,8 +1,12 @@
 package tn.esprit.spring.services;
 
+import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Entreprise;
@@ -11,6 +15,7 @@ import tn.esprit.spring.entities.ParticipationEvenement;
 import tn.esprit.spring.repository.EntrepriseRepository;
 import tn.esprit.spring.repository.EvenementRepository;
 import tn.esprit.spring.repository.ParticipationEvenementRepository;
+@EnableScheduling
 @Service
 public class EvenementServiceImpl implements EvenementService {
 	@Autowired
@@ -23,6 +28,11 @@ public class EvenementServiceImpl implements EvenementService {
 		public List<Evenement> retrieveAllEvenements() {
 			// TODO Auto-generated method stub
 			return (List<Evenement>) evenementRepository.findAll() ;
+		}
+		@Override
+		public List<ParticipationEvenement> retrieveAllParticipationEvenements() {
+			// TODO Auto-generated method stub
+			return (List<ParticipationEvenement>) participationEvenementRepository.findAll() ;
 		}
 
 		@Override
@@ -57,7 +67,36 @@ public class EvenementServiceImpl implements EvenementService {
 			ParticipationEvenement pe= new ParticipationEvenement();
 			pe.setEvenements(evenement);
 			pe.setEntreprises(e);
+			
                 participationEvenementRepository.save(pe);
+                updateNbreIntervenantEvenement();
 		}
+		@Scheduled(cron = "*/5 * * * * *" )
+				@Override
+				public void updateNbreIntervenantEvenement() {
+					// TODO Auto-generated method stub
+					List<ParticipationEvenement> participationEvenement = retrieveAllParticipationEvenements();
+					for (ParticipationEvenement pp :participationEvenement)
+					{
+						int idp= pp.getEvenements().getIdEvenement();
+						Evenement e = evenementRepository.findById(idp).orElse(null);
+						e.setNbreIntervenant(participationEvenementRepository.getNbreIntervenant(idp));
+						evenementRepository.save(e);
+					}
+					
+				}
+				@Override
+				public List<Evenement> getEvenementForEntreprise(int ide) {
+					// TODO Auto-generated method stub
+					List <Evenement> evenementFilter= new ArrayList<Evenement>();
+					List<Integer> Idevenement= evenementRepository.getEvenementEntrepriseDomain(ide);
+			for (int idevenement: Idevenement)		
+			{Evenement e= evenementRepository.findById(idevenement).orElse(null);
+			
+			evenementFilter.add(e);
+			}
+			return evenementFilter;
+
+				}
 
 }

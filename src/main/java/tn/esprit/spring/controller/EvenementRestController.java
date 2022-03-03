@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Evenement;
+import tn.esprit.spring.entities.ParticipationEvenement;
 import tn.esprit.spring.services.EvenementService;
 import tn.esprit.spring.services.IEmployeeService;
 
@@ -66,6 +67,19 @@ public class EvenementRestController {
 		public Evenement modifyEvenement(@RequestBody Evenement e) {
 			return evenementService.updateEvenement(e);
 		}
+		// http://localhost:8089/SpringMVC/evenement/retrieve-all-participations-evenements
+		@ApiOperation(value = "Récupérer la liste des participations evenements")
+		@GetMapping("/retrieve-all-participations-evenements")
+		public List<ParticipationEvenement> getParticipation() {
+			List<ParticipationEvenement> listParticipationEvenement= evenementService.retrieveAllParticipationEvenements();
+			return listParticipationEvenement;
+		}
+			//http://localhost:8089/SpringMVC/project/getEvenementForEntreprise/1
+			@ApiOperation(value = "getEvenementForEntreprise")
+			@GetMapping("/getEvenementForEntreprise/{ide}")
+			public List<Evenement> getEvenementDomain(@PathVariable("ide") int ide) {
+				return( List<Evenement>)evenementService.getEvenementForEntreprise(ide);
+			}
 }
 
 

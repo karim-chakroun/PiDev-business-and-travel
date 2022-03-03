@@ -34,9 +34,10 @@ public class Evenement implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEvenement;
-	@Enumerated(EnumType.STRING)
-	private Type type;
 	@NonNull private String nomEvenement, libelle,description,localisation;
+	private int nbreIntervenant=0;
+	@Enumerated(EnumType.STRING)
+	private Domain domain;
 	//@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date datedebEvenement;
 	//@Temporal (TemporalType.DATE)

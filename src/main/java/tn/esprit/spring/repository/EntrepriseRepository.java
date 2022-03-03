@@ -7,5 +7,6 @@ import tn.esprit.spring.entities.Entreprise;
 
 @Repository
 public interface EntrepriseRepository extends CrudRepository <Entreprise, Integer> {
-
+	
+	
 }
