@@ -23,13 +23,13 @@ public class LikesController {
 	LikeService likesservice;
 	@GetMapping("/retrive-Posts-with-most-likes")
 	public Post getMostPosts() {
-		Post post =likesservice.retrievePostWithMostLikes() ;
+		Post post =likesservice.retrievePostWithMostlikess() ;
 		return post;
 	
 }
 	@GetMapping("/retrive-list-Posts-with-most-likes")
 	public List<likes> getMostLikesPosts() {
-		List<likes> post =likesservice.retrieveListPostWithMostLikes() ;
+		List<likes> post =likesservice.retrieveListPostWithMostlikess() ;
 		return post;
 	
 }

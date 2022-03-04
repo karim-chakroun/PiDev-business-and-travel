@@ -9,54 +9,53 @@ import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Employee;
-import tn.esprit.spring.entities.Like;
-import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.entities.likes;
+import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.repository.LikeRepository;
-//import tn.esprit.spring.repository.likeRepository;
-//import tn.esprit.spring.repository.LikeRepository;
+//import tn.esprit.spring.repository.likesRepository;
+//import tn.esprit.spring.repository.likesRepository;
 import tn.esprit.spring.repository.PostRepository;
 @Service
 public class LikeServiceImpl implements LikeService{
 	@Autowired
 	PostRepository postRepository;
 	@Autowired
-	LikeRepository likeRepository;
+	LikeRepository likesRepository;
 	@Override
-	public List<Like> retrieveAllRates() {
+	public List<likes> retrieveAllRates() {
 		// TODO Auto-generated method stub
-		return  (List<Like>) likeRepository.findAll();
+		return  (List<likes>) likesRepository.findAll();
 	}
 
 	@Override
-	public Like addRate(Like e) {
-		likeRepository.save(e);
+	public likes addRate(likes e) {
+		likesRepository.save(e);
 		return null;
 	}
 
 	@Override
 	public void deletePosts(int id) {
 		// TODO Auto-generated method stub
-		likeRepository.deleteById(id);
+		likesRepository.deleteById(id);
 		
 	}
 
 	@Override
-	public Like updateComment(Like e) {
+	public likes updateComment(likes e) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public Post retrievePostWithMostLikes() {
-		 int idpost = likeRepository.getPostsWithMostLikes();
+	public Post retrievePostWithMostlikess() {
+		 int idpost= likesRepository.getPostsWithMostLikes();
 		return postRepository.findById(idpost).get();
 		
 	}
 
 	@Override
-	public List<likes> retrieveListPostWithMostLikes() {
+	public List<likes> retrieveListPostWithMostlikess() {
 		
-		return (List<likes>) likeRepository.getListPostsWithMostLikes();
+		return (List<likes>) likesRepository.getListPostsWithMostLikes();
 		
 		
 			

@@ -4,21 +4,21 @@ import java.util.List;
 import java.util.Set;
 
 import tn.esprit.spring.entities.Employee;
-import tn.esprit.spring.entities.Like;
-import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.entities.likes;
+import tn.esprit.spring.entities.Post;
+//import tn.esprit.spring.entities.likess;
 
 public interface LikeService {
-	List<Like> retrieveAllRates();
+	List<likes> retrieveAllRates();
 
-	Like addRate(Like e);
+	likes addRate(likes e);
 
 	void deletePosts(int id);
 
-	Like updateComment(Like e);
+	likes updateComment(likes e);
 
-	Post retrievePostWithMostLikes();
-	List<likes> retrieveListPostWithMostLikes();
+	Post retrievePostWithMostlikess();
+	List<likes> retrieveListPostWithMostlikess();
 
 
 }
