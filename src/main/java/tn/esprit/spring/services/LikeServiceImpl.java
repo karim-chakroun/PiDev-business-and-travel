@@ -20,23 +20,23 @@ public class LikeServiceImpl implements LikeService{
 	@Autowired
 	PostRepository postRepository;
 	@Autowired
-	LikeRepository likesRepository;
+	LikeRepository likessRepository;
 	@Override
 	public List<likes> retrieveAllRates() {
 		// TODO Auto-generated method stub
-		return  (List<likes>) likesRepository.findAll();
+		return  (List<likes>) likessRepository.findAll();
 	}
 
 	@Override
 	public likes addRate(likes e) {
-		likesRepository.save(e);
+		likessRepository.save(e);
 		return null;
 	}
 
 	@Override
 	public void deletePosts(int id) {
 		// TODO Auto-generated method stub
-		likesRepository.deleteById(id);
+		likessRepository.deleteById(id);
 		
 	}
 
@@ -47,7 +47,7 @@ public class LikeServiceImpl implements LikeService{
 	}
 	@Override
 	public Post retrievePostWithMostlikess() {
-		 int idpost= likesRepository.getPostsWithMostLikes();
+		 int idpost= likessRepository.getPostsWithMostLikes();
 		return postRepository.findById(idpost).get();
 		
 	}
@@ -55,9 +55,7 @@ public class LikeServiceImpl implements LikeService{
 	@Override
 	public List<likes> retrieveListPostWithMostlikess() {
 		
-		return (List<likes>) likesRepository.getListPostsWithMostLikes();
-		
-		
+		return (List<likes>) likessRepository.getListPostsWithMostLikes();	
 			
 	}
 		}
