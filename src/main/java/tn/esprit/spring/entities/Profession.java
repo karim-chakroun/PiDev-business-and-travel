@@ -1,5 +1,5 @@
 package tn.esprit.spring.entities;
 
 public enum Profession {
-	hr, ceo, responsable,  Autre
+	Docteur, Ingenieur, Etudiant, Commercial, Cadre, Enseignant, Autre
 }

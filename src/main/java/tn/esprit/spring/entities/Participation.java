@@ -40,12 +40,9 @@ public class Participation  implements Serializable{
 	private Employee employees;
 	@ToString.Exclude
 	@JsonIgnore
-
 	@ManyToOne
 	private Voyage voyages;
-	@ToString.Exclude
-	@JsonIgnore
-
+	/*@ToString.Exclude
 	@ManyToOne
-	private Entreprise entreprises;
+	private Entreprise entreprises;*/
 }

@@ -9,10 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,17 +31,12 @@ public class ParticipationEvenement implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idParticipEvenement;
-	@Temporal (TemporalType.DATE)
-
+	
 	@NonNull private java.util.Date dateParticipation;
 	@ToString.Exclude
-	@JsonIgnore
-
 	@ManyToOne
 	private Entreprise entreprises;
 	 @ToString.Exclude
-		@JsonIgnore
-
 		@ManyToOne
 		private Evenement evenements;
 

@@ -1,6 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -92,4 +93,11 @@ public class Employee  implements Serializable {
 
 		@ManyToOne
 		private Entreprise entreprises;
+	 @OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
+		private Set<likes> likes;
+		@OneToMany(mappedBy="to")
+	    private List<Followers> followers;
+
+	    @OneToMany(mappedBy="from")
+	    private List<Followers> following;
 }
