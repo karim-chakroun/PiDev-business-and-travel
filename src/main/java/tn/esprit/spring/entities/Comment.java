@@ -20,7 +20,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @RequiredArgsConstructor
 public class Comment  implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,13 +28,13 @@ public class Comment  implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idComment;
-	@NonNull private String body;
+	 private String body;
 
-	@NonNull private java.util.Date dateComment;
-	@ToString.Exclude
+	 private java.util.Date dateComment;
+	//@ToString.Exclude
 	@ManyToOne
 	private Employee employees;
-	@ToString.Exclude
+	//@ToString.Exclude
 	@ManyToOne
 	private Post posts;
 

@@ -9,10 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,19 +24,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class FeedBack  implements Serializable{
+public class ParticipationEvenement implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idFeedback;
-	@NonNull private String body;
-	@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date dateFeedback;
+	private int idParticipEvenement;
 	
+	@NonNull private java.util.Date dateParticipation;
 	@ToString.Exclude
-	@JsonIgnore
-
 	@ManyToOne
-	private Employee employees;
+	private Entreprise entreprises;
+	 @ToString.Exclude
+		@ManyToOne
+		private Evenement evenements;
+
 }

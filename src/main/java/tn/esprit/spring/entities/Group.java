@@ -1,13 +1,14 @@
 package tn.esprit.spring.entities;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -15,10 +16,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
@@ -26,20 +25,23 @@ import lombok.ToString;
 @AllArgsConstructor
 //@NoArgsConstructor
 @RequiredArgsConstructor
-public class ParticipationProject implements Serializable{
+public class Group {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idParticipProject;
-	@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date dateParticipation=new Date(System.currentTimeMillis());
-	@ToString.Exclude
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Column(name="idGroup")
+	
+	private Long idGroup;
+	private String groupeName;
+	
+	
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateGroupe;
+	
+	private String imageGroup;
+	
+	@ManyToMany
 	@JsonIgnore
+	private Set<Employee> GroupUser;
 
-	@ManyToOne
-	private Project projects;
-	 @ToString.Exclude
-		@JsonIgnore
-
-		@ManyToOne
-		private Employee employees;
 }

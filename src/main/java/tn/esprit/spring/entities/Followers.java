@@ -1,18 +1,15 @@
 package tn.esprit.spring.entities;
 
-import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,19 +25,21 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class FeedBack  implements Serializable{
-	private static final long serialVersionUID = 1L;
-
+public class Followers {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idFeedback;
-	@NonNull private String body;
-	@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date dateFeedback;
+	private int idFollow;
 	
+	//private String FollowerName;
+	//private String ClientName;
+	//private int ClientId;
+	@NonNull private java.util.Date dateFollow;
 	@ToString.Exclude
-	@JsonIgnore
-
 	@ManyToOne
-	private Employee employees;
+    @JoinColumn(name="from_user_fk")
+    private Employee from;
+
+    @ManyToOne
+    @JoinColumn(name="to_user_fk")
+    private Employee to;
 }

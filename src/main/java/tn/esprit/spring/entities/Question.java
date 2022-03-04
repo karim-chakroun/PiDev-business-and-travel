@@ -43,6 +43,8 @@ public class Question  implements Serializable{
 	@ManyToOne
 	private Quiz quizs;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="questions")
 		private Set<Response> responses;
 	
