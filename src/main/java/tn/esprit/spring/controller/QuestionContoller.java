@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Question;
+import tn.esprit.spring.entities.Response;
 import tn.esprit.spring.services.IQuestionService;
 
 @RestController
@@ -61,5 +62,10 @@ public class QuestionContoller {
 		return questionService.findQuestionbyQuiz(id);
 		
 	}
-	
+	@PostMapping("/addResponses/{comp_id}")
+	public Question setallqustion( @PathVariable("comp_id") Integer id,@RequestBody Set<Response> responses )
+	{
+		return questionService.addquestions(id,responses);
+		
+	}
 }

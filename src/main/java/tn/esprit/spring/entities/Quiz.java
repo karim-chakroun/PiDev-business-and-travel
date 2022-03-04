@@ -49,6 +49,7 @@ public class Quiz  implements Serializable{
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quizs")
 		private Set<Question> questions;
+	@JsonIgnore
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quiz")
 		private Set<Result> results;

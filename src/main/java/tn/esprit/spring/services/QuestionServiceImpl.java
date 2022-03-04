@@ -1,5 +1,6 @@
 package tn.esprit.spring.services;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,8 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Complain;
 import tn.esprit.spring.entities.Question;
 import tn.esprit.spring.entities.Quiz;
+import tn.esprit.spring.entities.Response;
 import tn.esprit.spring.repository.QuestionRepository;
 import tn.esprit.spring.repository.QuizRepository;
+import tn.esprit.spring.repository.ResponseRepository;
 
 @Service
 @Slf4j
@@ -21,6 +24,8 @@ public class QuestionServiceImpl implements IQuestionService {
 	QuestionRepository questionRepository;
 	@Autowired
 	QuizRepository quizRepository;
+	@Autowired
+	ResponseRepository responseRepository;
 	
 	@Override
 	public Question addQuestion(Question back, Integer quiz_id) {
@@ -69,6 +74,19 @@ public class QuestionServiceImpl implements IQuestionService {
 			log.info("this is the body: "+question.getQuestiontext());
 		}
 		 return q.getQuestions();
+	}
+
+	@Override
+	public Question addquestions(Integer Id, Set<Response> Res) {
+	Question q= questionRepository.findById(Id).get();
+	for (Response response : Res) {
+		response.setQuestions(q);
+		responseRepository.save(response);
+	}			
+	questionRepository.save(q);
+	return q;
+		
+		
 	}
 
 }
