@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Post;
-import tn.esprit.spring.entities.employedto;
+
 @Repository
 public interface PostRepository extends CrudRepository <Post, Integer> {
 
