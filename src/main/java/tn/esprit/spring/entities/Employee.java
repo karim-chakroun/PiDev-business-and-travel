@@ -11,7 +11,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,29 +30,69 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class Employee  implements Serializable {
 	private static final long serialVersionUID = 1L;
-@JsonIgnore
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEmployee;
 	
- private String  email,password;
-	 private int numTel;
+	@NonNull private String  email,password;
+	@NonNull private int numTel;
 
-	 private String FirstName, LastName;
-	 private float prime=0;
-	 private java.util.Date dateNaissance;
+	@NonNull private String FirstName, LastName;
+	@NonNull private float salaire,prime=0;
+	@NonNull private int nbreProjet=0;
+	@Temporal (TemporalType.DATE)
+	@NonNull private java.util.Date dateNaissance;
 
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
+	@Enumerated(EnumType.STRING)
+	private Specialite specialite;
 	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
 		private Set<Comment> comments;
-	 @OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
-		private Set<Post> posts;
+	
+	 @ToString.Exclude
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
+		private Set<FeedBack> feedBacks;
+
+	 @ToString.Exclude
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
+		private Set<Participation> participation;
+	 @ToString.Exclude
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
+		private Set<Complain> complains;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+		private Set<Result> results ;
+	
+	 @ToString.Exclude
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
+		private Set<ParticipationProject> participationProjects;
+	 @ToString.Exclude
+		@JsonIgnore
+
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
+		private Set<Task> tasks;
+	@ToString.Exclude
+		@JsonIgnore
+
+		@ManyToOne
+		private Entreprise entreprises;
 	 @OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
 		private Set<likes> likes;
 		@OneToMany(mappedBy="to")
@@ -57,23 +100,4 @@ public class Employee  implements Serializable {
 
 	    @OneToMany(mappedBy="from")
 	    private List<Followers> following;
-	 
-	
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<FeedBack> feedBacks;
-
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Participation> participation;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Complain> complains;
-	
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<ParticipationProject> participationProjects;
-	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Task> tasks;
 }

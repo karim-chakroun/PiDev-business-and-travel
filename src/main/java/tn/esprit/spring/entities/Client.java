@@ -1,18 +1,13 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+
 public class Client implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -34,12 +29,15 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idClient;
-	@NonNull private String nom;
-	@NonNull private String prenom;
-	@NonNull private java.util.Date dateNaissance;
-	@NonNull private String email;
-	@NonNull private String password;
+	private String nom;
+	private String prenom;
+	private java.util.Date dateNaissance;
+	private String email;
+	private String password;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
-	
+	private String role;
+    private boolean enabled;
+    
+	 
 }

@@ -32,9 +32,7 @@ public class Role implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idRole;
 	@NonNull private String roles;
-	@ToString.Exclude
-	@ManyToMany(mappedBy="roles", cascade = CascadeType.ALL)
-    private Set<User> users;
+	
 
 
 }

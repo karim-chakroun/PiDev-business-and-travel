@@ -1,10 +1,10 @@
 package tn.esprit.spring.entities;
 
-import java.io.Serializable;
+
+
+import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,25 +22,34 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
-public class FeedBack  implements Serializable{
+
+@Entity
+public class Result {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idFeedback;
-	@NonNull private String body;
-	@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date dateFeedback;
+	private int idResult;
 	
-	@ToString.Exclude
-	@JsonIgnore
-
+	private Integer Score;
+	
+	@Temporal(TemporalType.DATE)
+	private Date creationdate;
+	
 	@ManyToOne
-	private Employee employees;
+	
+	private Employee employee;
+	
+	@ManyToOne
+	
+	private Quiz quiz;
+	
+	
+	
+	
 }

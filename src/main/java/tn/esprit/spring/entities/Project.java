@@ -12,6 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,22 +38,31 @@ public class Project  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idProject;
 	@NonNull private String description, libelle, nom, documents;
+	@Temporal (TemporalType.DATE)
 
 	@NonNull private java.util.Date dateDebut, dateFin;
 	@NonNull private float budget;
 	@NonNull private int intervenant=0;
+	@NonNull private int nbreTaskInTime=0, nbreTaskLate=0,nbreTask=0;
 	@Enumerated(EnumType.STRING)
 	
 	private Etat etat= Etat.pending;
+@Enumerated(EnumType.STRING)
+	
+	private Specialite specialite;
 	
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="projects")
 		private Set<ParticipationProject> participationProjects;
 
-	@ToString.Exclude
-	@ManyToOne
-	private Entreprise entreprises;
+	//@ToString.Exclude
+	//@JsonIgnore
+
+	//@ManyToOne
+	//private Entreprise entreprises;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="projects")
 		private Set<Task> tasks;
 	
