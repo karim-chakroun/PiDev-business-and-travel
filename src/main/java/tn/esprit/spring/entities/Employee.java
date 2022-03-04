@@ -42,7 +42,7 @@ public class Employee  implements Serializable {
 	@NonNull private String  email,password;
 	@NonNull private int numTel;
 
-	@NonNull private String FirstName, LastName;
+	@NonNull private String FirstName, LastName,nnn;
 	@NonNull private float salaire,prime=0;
 	@NonNull private int nbreProjet=0;
 	@Temporal (TemporalType.DATE)
