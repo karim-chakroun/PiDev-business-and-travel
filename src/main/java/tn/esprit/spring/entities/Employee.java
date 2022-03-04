@@ -1,6 +1,7 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +31,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class Employee  implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEmployee;
@@ -43,8 +46,18 @@ public class Employee  implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
 	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
+		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
 		private Set<Comment> comments;
+	 @OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
+		private Set<Post> posts;
+	 @OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
+		private Set<likes> likes;
+		@OneToMany(mappedBy="to")
+	    private List<Followers> followers;
+
+	    @OneToMany(mappedBy="from")
+	    private List<Followers> following;
+	 
 	
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")

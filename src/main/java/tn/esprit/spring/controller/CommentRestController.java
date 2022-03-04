@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,16 +26,16 @@ public class CommentRestController {
 	@Autowired
 	CommentService commentservice;
 	// http://localhost:8088/SpringMVC/employee/retrieve-all-employees
-			@ApiOperation(value = "Récupérer la liste des employees")
+			@ApiOperation(value = "Récupérer la liste des comment")
 			@GetMapping("/retrieve-comments/{Post-id}")
 			public List<Comment> getComments(@PathVariable("Post-id") int postId) {
 				List<Comment> listComment = commentservice.retrieveCooment(postId);
 				return listComment;
 			}
-			@PostMapping("/add-Comment")
-			public void addComment(@RequestBody Comment e) {
-				System.out.print(e.toString());
-				commentservice.addComment(e);
+			@PostMapping("/add-Comment/{Post-id}")
+			public void addComment(@RequestBody Comment e,@PathVariable("Post-id") int postId) {
+				//System.out.print(e.toString());
+				commentservice.addComment(e,postId);
 				
 			}
 			// http://localhost:8089/SpringMVC/task/remove-task/1
@@ -43,6 +44,21 @@ public class CommentRestController {
 				commentservice.deletePosts(postId);
 			}
 	
-	
-
+			@GetMapping("/retrieve-Allcomments")
+			public List<Comment> getallComments() {
+				List<Comment> listComment = commentservice.retrieveAllComment();
+				return listComment;
+			}
+			// http://localhost:8088/SpringMVC/employee/modify-employee
+			@PutMapping("/modify-comment/{Comment-Id}")
+			public void modifyEmployee(@RequestBody Comment e,@PathVariable("Comment-Id") int postId) {
+				commentservice.updateComment(e,postId);
+			}
+			@PostMapping("/add-Comment")
+			public void addComment(@RequestBody Comment e) {
+				//System.out.print(e.toString());
+				commentservice.addComment1(e);
+				
+			}
+			
 }

@@ -1,5 +1,6 @@
 package tn.esprit.spring.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,19 @@ import org.springframework.stereotype.Service;
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.entities.Task;
 import tn.esprit.spring.repository.CommentRepository;
+import tn.esprit.spring.repository.EmployeeRepository;
+import tn.esprit.spring.repository.PostRepository;
 @Service
 public class CommentServiceImpl implements CommentService {
 	@Autowired
 	CommentRepository CommentRepository;
+	@Autowired
+	EmployeeRepository emRepository;
+	@Autowired
+	PostRepository postRepository;
 	@Override
 	public List<Comment> retrieveAllComment() {
 		// TODO Auto-generated method stub
@@ -21,8 +29,11 @@ public class CommentServiceImpl implements CommentService {
 		}
 
 	@Override
-	public void addComment(Comment e) {
+	public void addComment1(Comment e) {
 		// TODO Auto-generated method stub
+		//Date now = new Date();
+		//e.setDateComment(now);
+		//e.setEmployees(emRepository.findById(idPost).get());
 		CommentRepository.save(e);
 	}
 
@@ -33,9 +44,11 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public Comment updateComment(Comment e) {
+	public void updateComment(Comment e,int id) {
 		// TODO Auto-generated method stub
-		return CommentRepository.save(e);
+		
+		e.setIdComment(id);
+		CommentRepository.save(e);
 	}
 	//@Override
 	//public List<Comment> retrieveCooment(int id) {
@@ -46,6 +59,18 @@ public class CommentServiceImpl implements CommentService {
 	public List retrieveCooment(int id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void addComment(Comment e,int idpost) {
+		// TODO Auto-generated method stub
+		//Date now = new Date();
+		//e.setDateComment(now);
+		Post p = postRepository.findById(idpost).orElse(null);
+		//p.getComments().add(e);
+		e.setPosts(p);
+		CommentRepository.save(e);
+		
 	}
 
 	//}

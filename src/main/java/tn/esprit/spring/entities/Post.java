@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -37,6 +38,11 @@ public class Post  {
 		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
 		private Set<Comment> comments;
 	// @ToString.Exclude
+//@OneToMany(cascade = CascadeType.REMOVE,mappedBy="posts")
+//private Set<Like> likes;
 		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
-		private Set<Rating> ratings;
+		private Set<likes> likes;
+@ManyToOne
+private Employee employees;
+
 }
