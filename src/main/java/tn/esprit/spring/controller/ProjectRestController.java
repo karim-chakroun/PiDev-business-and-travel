@@ -1,5 +1,6 @@
 package tn.esprit.spring.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,7 @@ import org.supercsv.prefs.CsvPreference;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.models.media.MediaType;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.ParticipationProject;
 import tn.esprit.spring.entities.Project;
@@ -145,4 +148,19 @@ public class ProjectRestController {
 				        csvWriter.close();
 				
 				    }  
+					// http://localhost:8089/SpringMVC/project/exportpdf
+				 @GetMapping(value = "/exportpdf/{project-id}/{entreprise-id}")
+					public void employeeReports(HttpServletResponse response,@PathVariable("project-id") int projectId,@PathVariable("entreprise-id") int idEntreprise) throws IOException {
+				        response.setContentType("application/pdf");
+				        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
+				        String currentDateTime = dateFormatter.format(new Date());
+
+				        String headerKey = "Content-Disposition";
+				        String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
+				        response.setHeader(headerKey, headerValue);
+
+				        projectService.generate(response, projectId, idEntreprise);
+					
+						
+					}
 }

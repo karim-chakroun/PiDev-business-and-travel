@@ -25,4 +25,13 @@ public interface EmployeeRepository extends CrudRepository <Employee, Integer> {
 		List<Integer> getEmployeeProjectSpecialite(@Param("idProject") int idProject);
 	
 
+			@Query(value="SELECT Max(employees_id_employee) FROM `task` t where t.etat_remise='inTime'AND t.projects_id_project=:idProject",nativeQuery = true)
+	//employee qui a le nbre de projet le plus grand 
+		int employeeTaskInTime(@Param("idProject") int idProject);
+
+			@Query(value="SELECT Min(employees_id_employee) FROM `task` t where t.etat_remise='inTime'AND t.projects_id_project=:idProject",nativeQuery = true)
+	//employee qui a le nbre de projet le plus grand 
+		int employeeTaskInTimeMin(@Param("idProject") int idProject);
+
+
 }

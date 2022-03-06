@@ -2,6 +2,8 @@ package tn.esprit.spring.services;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.ParticipationProject;
 import tn.esprit.spring.entities.Project;
@@ -27,5 +29,8 @@ public interface ProjectService {
 	//choisir le meilleur employee pour un projet suivant la specialite et le nbre de projet 
 	List<Employee> getEmployeeForProject(int idp);
 	//void AssignEmployeeFiltree(int ide);
+	void EnvoyerRapport(HttpServletResponse response);
+
+	void generate(HttpServletResponse response,int idProject, int idEntreprise);
 	
 }
