@@ -16,6 +16,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.FeedBack;
 import tn.esprit.spring.entities.Quiz;
+import tn.esprit.spring.entities.Result;
 import tn.esprit.spring.services.IQuizService;
 
 @RestController
@@ -68,7 +69,7 @@ public class QuizContoller {
 		
 	}
 	@PostMapping("/result/{idemp}")
-	public int getresult(@RequestBody Quiz q,@PathVariable("idemp")Integer Id )
+	public Result getresult(@RequestBody Quiz q,@PathVariable("idemp")Integer Id )
 	{
 		 return quizInterface.getResult(q,Id);
 		

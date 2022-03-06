@@ -5,6 +5,8 @@ package tn.esprit.spring.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,18 +37,19 @@ public class Result {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idResult;
-	
+	@Enumerated(EnumType.STRING)
+	private Badge badge;
 	private Integer Score;
 	
 	@Temporal(TemporalType.DATE)
 	private Date creationdate;
 	
 	@ManyToOne
-	
+	@JsonIgnore
 	private Employee employee;
 	
 	@ManyToOne
-	
+	@JsonIgnore
 	private Quiz quiz;
 	
 	

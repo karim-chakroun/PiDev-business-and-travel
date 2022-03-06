@@ -37,13 +37,14 @@ public class Question  implements Serializable{
 	private int idQuestion;
 	@ToString.Exclude
 	private String Questiontext;
-	private Type typeQuestion;
+	@Enumerated(EnumType.STRING)
+	private Difficulty diffculyQuestion;
 	@ToString.Exclude
 	@JsonIgnore
 	@ManyToOne
 	private Quiz quizs;
 	 @ToString.Exclude
-		@JsonIgnore
+		
 
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="questions")
 		private Set<Response> responses;

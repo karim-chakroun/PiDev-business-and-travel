@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,6 +36,9 @@ public class Quiz  implements Serializable{
 	private String nameQuiz;
 	private int numQuestion;
 	private int Score;
+	@Enumerated(EnumType.STRING)
+	private Difficulty difficulty;
+	@Enumerated(EnumType.STRING)
 	private Type TypeQuiz;
 	@JsonIgnore
 	@ToString.Exclude
@@ -42,11 +47,12 @@ public class Quiz  implements Serializable{
 	private Entreprise entreprises;
 	
 	 @ToString.Exclude
-		@JsonIgnore
+		
 
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quizs")
 		private Set<Question> questions;
 	 @ToString.Exclude
+	 @JsonIgnore
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="quiz")
 		private Set<Result> results;
 }

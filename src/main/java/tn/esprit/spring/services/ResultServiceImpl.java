@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.Badge;
+import tn.esprit.spring.entities.Difficulty;
 import tn.esprit.spring.entities.Response;
 import tn.esprit.spring.entities.Result;
+import tn.esprit.spring.entities.Type;
 import tn.esprit.spring.repository.ResultRepository;
 
 @Service
@@ -25,5 +28,12 @@ public class ResultServiceImpl implements IResultService {
 	}
 	 return lco;
 	}
+	@Override
+	public Integer resultbytype(Integer emi, Type type, Badge badge) {
+		// TODO Auto-generated method stub
+		return resultRepository.Listresultwithtype(emi  ,type , badge);
+	}
+	
+	
 
 }

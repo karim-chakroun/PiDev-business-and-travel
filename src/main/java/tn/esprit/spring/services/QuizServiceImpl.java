@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.entities.Badge;
 import tn.esprit.spring.entities.Complain;
+import tn.esprit.spring.entities.Difficulty;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Question;
 import tn.esprit.spring.entities.Quiz;
@@ -100,7 +102,7 @@ public class QuizServiceImpl implements IQuizService {
 	@Override
 	public Quiz makeQuizaumatique(Integer Id) {
 		Quiz quiz=quizRepository.findById(Id).get();
-		List<Question> ques= (List<Question>) questionRepository.findAll();
+		List<Question> ques= (List<Question>) questionRepository.retrieveClientsByDifficulty(Id, quiz.getDifficulty());
 		List<Question> specif1 = (List<Question>) new ArrayList<Question>();
 		for (Question question : ques) {
 			if(question.getQuizs().getIdQuiz()==Id)
@@ -120,9 +122,10 @@ public class QuizServiceImpl implements IQuizService {
 		quiz.setQuestions(specif);		
 		return quiz;
 	}
+	
 
 	@Override
-	public int getResult(Quiz q,Integer Id) {
+	public Result getResult(Quiz q,Integer Id) {
 		// TODO Auto-generated method stub
 		Employee emp=employeeRepository.findById(Id).get();
 		Date now = new Date();
@@ -141,8 +144,30 @@ public class QuizServiceImpl implements IQuizService {
 		res.setQuiz(q);
 		res.setCreationdate(now);
 		res.setScore(result);
+		res=getGold(res, q);
 		resultRepository.save(res);
-		return result;
+		return res;
 	}
-
+	
+	public Result getGold(Result res , Quiz q)
+	{
+		if((q.getDifficulty().equals(Difficulty.HARD)) && (res.getScore()==q.getNumQuestion()) )
+		{
+			res.setBadge(Badge.GOLD);
+			
+		}
+		else if ((q.getDifficulty().equals(Difficulty.MEDIUM)) && (res.getScore()==q.getNumQuestion()))
+		{
+			res.setBadge(Badge.SILVER);
+		}
+		else if ((q.getDifficulty().equals(Difficulty.EASY)) && (res.getScore()==3))
+		{
+			res.setBadge(Badge.BRONZE);
+		
+		}else
+		{
+			res.setBadge(null);
+		}
+		return res;
+	}
 }

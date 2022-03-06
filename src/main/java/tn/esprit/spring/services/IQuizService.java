@@ -3,6 +3,7 @@ package tn.esprit.spring.services;
 import java.util.List;
 
 import tn.esprit.spring.entities.Quiz;
+import tn.esprit.spring.entities.Result;
 
 public interface IQuizService {
 
@@ -14,6 +15,6 @@ public interface IQuizService {
 	public void assignQuestionToQuizById(Integer Idquestion ,Integer Id);
 	public void assignQuestionToQuizByBody(Integer Idquestion ,Integer Id);
 	Quiz makeQuizaumatique(Integer Id);
-	int getResult(Quiz q,Integer Id);
+	Result getResult(Quiz q,Integer Id);
 	
 }
