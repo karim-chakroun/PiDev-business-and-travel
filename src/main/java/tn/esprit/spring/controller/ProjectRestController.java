@@ -1,16 +1,25 @@
 package tn.esprit.spring.controller;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,20 +27,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+import com.google.zxing.WriterException;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.models.media.MediaType;
+import tn.esprit.spring.config.MyConstants;
 import tn.esprit.spring.entities.Employee;
+import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.ParticipationProject;
 import tn.esprit.spring.entities.Project;
+import tn.esprit.spring.repository.EmployeeRepository;
 import tn.esprit.spring.services.EntrepriseService;
 import tn.esprit.spring.services.IEmployeeService;
 import tn.esprit.spring.services.ProjectService;
+import tn.esprit.spring.services.QrCodeGenerator;
 
 @RestController
 @Api(tags = "Gestion des projects")
@@ -43,6 +58,11 @@ public class ProjectRestController {
 	EntrepriseService entrepriseService;
 	@Autowired
 	IEmployeeService employeeService;
+	@Autowired
+	EmployeeRepository employeeRepository;
+	 @Autowired
+	  JavaMailSender emailSender;
+
 	// http://localhost:8089/SpringMVC/project/retrieve-all-project
 		@ApiOperation(value = "Récupérer la liste des projects")
 		@GetMapping("/retrieve-all-project")
@@ -150,17 +170,96 @@ public class ProjectRestController {
 				    }  
 					// http://localhost:8089/SpringMVC/project/exportpdf
 				 @GetMapping(value = "/exportpdf/{project-id}/{entreprise-id}")
-					public void employeeReports(HttpServletResponse response,@PathVariable("project-id") int projectId,@PathVariable("entreprise-id") int idEntreprise) throws IOException {
+					public void employeeReports(Model model, HttpServletResponse response,@PathVariable("project-id") int projectId,@PathVariable("entreprise-id") int idEntreprise) throws IOException {
 				        response.setContentType("application/pdf");
 				        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-				        String currentDateTime = dateFormatter.format(new Date());
+				        Entreprise e=entrepriseService.retrieveEntreprise(idEntreprise);
+			        	  Project p=projectService.retrieveProject(projectId);
 
 				        String headerKey = "Content-Disposition";
-				        String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
+				        String headerValue = "attachment;  filename=rapport_id"+e.getIdEntreprise()+"/"+p.getIdProject()+".pdf";
 				        response.setHeader(headerKey, headerValue);
-
+getQRCode(model, idEntreprise,projectId);
 				        projectService.generate(response, projectId, idEntreprise);
 					
 						
 					}
+				 private static final String QR_CODE_IMAGE_PATH = "./src/test/java/QRCode.png";
+				 @GetMapping(value = "/qrcode/{entreprise-id}/{project-id}")
+			        public String getQRCode( Model model,@PathVariable("entreprise-id") int entrepriseId,@PathVariable("project-id") int idProject){
+			        	  Entreprise e=entrepriseService.retrieveEntreprise(entrepriseId);
+			        	  Project p=projectService.retrieveProject(idProject);
+			        	  int idEmployee= employeeRepository.employeeTaskInTime(idProject);
+			        	   	Employee ee= employeeRepository.findById(idEmployee).orElse(null);
+
+			        	    int idemployee= employeeRepository.employeeTaskInTimeMin(idProject);
+			        	    Employee eee = employeeRepository.findById(idemployee).orElse(null);
+			            String infoEntreprise="entreprise :"+e.getNomEntreprise()+"  email:  "+e.getEmail()+"  numTel  :"+e.getNumTel()+"  "+"information Project  :"+p.getNom()+" description "+p.getDescription()+"   nbreIntervenant"+p.getIntervenant()+"    nbreTask"+p.getNbreTask()+"   information Meilleur Employee"+ee.getFirstName()+"  "+ee.getLastName()+"   email:  " 
+			+ee.getEmail()+"    nbre de projet qu il gere    "+ee.getNbreProjet()+"information employee paresseux    "+eee.getFirstName()+"  "+eee.getLastName()+"   email:  " 
+					+eee.getEmail()+"    nbre de projet qu il gere    "+eee.getNbreProjet();
+			            		String github="num :"+e.getNomEntreprise();
+
+			            byte[] image = new byte[0];
+			            try {
+
+			                // Generate and Return Qr Code in Byte Array
+			                image = QrCodeGenerator.getQRCodeImage(infoEntreprise,250,250);
+
+			                // Generate and Save Qr Code Image in static/image folder
+			                QrCodeGenerator.generateQRCodeImage(infoEntreprise,250,250,QR_CODE_IMAGE_PATH);
+
+			            } catch (WriterException | IOException ex) {
+			                ex.printStackTrace();
+			            }
+			            // Convert Byte Array into Base64 Encode String
+			            String qrcode = Base64.getEncoder().encodeToString(image);
+
+			            model.addAttribute("medium",infoEntreprise);
+			            model.addAttribute("github",github);
+			            model.addAttribute("qrcode",qrcode);
+
+			            return "infoEntreprise";
+			        }
+			 @ResponseBody
+				    @PostMapping("/sendHtmlEmail/{entreprise-id}/{project-id}")
+				    public String sendHtmlEmail(Model model,HttpServletResponse response,@PathVariable("entreprise-id") int idEntreprise,@PathVariable("project-id") int idProject) throws MessagingException, IOException {
+	        	  Entreprise e=entrepriseService.retrieveEntreprise(idEntreprise);
+				        MimeMessage message = emailSender.createMimeMessage();
+
+				        boolean multipart = true;
+				        
+				        MimeMessageHelper helper = new MimeMessageHelper(message, multipart, "utf-8");
+				        
+				       
+				        
+				        helper.setTo(e.getEmail());
+				        helper.setSubject("Test email with attachments");
+				        
+				        helper.setText("Hello, Im testing email with attachments!");
+				      //  employeeReports(model, response, idProject, idEntreprise);
+			        	  Project p=projectService.retrieveProject(idProject);
+				        String path1 = "C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"/"+p.getIdProject()+".pdf";
+				        Multipart emailContent = new MimeMultipart();
+				      //Attachment body part.
+						MimeBodyPart pdfAttachment = new MimeBodyPart();
+						pdfAttachment.attachFile("C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"/"+p.getIdProject()+".pdf");
+						
+						//Attach body parts
+						MimeBodyPart textBodyPart = new MimeBodyPart();
+						textBodyPart.setText("My multipart text");
+						emailContent.addBodyPart(textBodyPart);
+						emailContent.addBodyPart(pdfAttachment);
+						
+				        
+
+				        
+				        helper.setSubject("Test send HTML email");
+				        
+				    
+				        emailSender.send(message);
+
+				        return "Email Sent!";
+				    }
+				 
+			
 }

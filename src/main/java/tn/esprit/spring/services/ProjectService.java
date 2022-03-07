@@ -29,7 +29,7 @@ public interface ProjectService {
 	//choisir le meilleur employee pour un projet suivant la specialite et le nbre de projet 
 	List<Employee> getEmployeeForProject(int idp);
 	//void AssignEmployeeFiltree(int ide);
-	void EnvoyerRapport(HttpServletResponse response);
+	//void EnvoyerRapport(HttpServletResponse response);
 
 	void generate(HttpServletResponse response,int idProject, int idEntreprise);
 	

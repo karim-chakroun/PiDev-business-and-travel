@@ -21,6 +21,7 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
@@ -230,7 +231,7 @@ return employeesFilter;
 		
 	}
 
-	@Override
+	/*@Override
 	public void EnvoyerRapport(HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		
@@ -243,18 +244,20 @@ return employeesFilter;
         for (int identreprise: idEntreprises)
         {
         	Entreprise entreprise= entrepriseRepository.findById(identreprise).orElse(null);
-        	generate(response, id, identreprise);
+        	
         }
-		}
+		}else log.info("le projet n est pas encore termine");
 	}
 		
-	}
+	}*/
 	
 
 
 	public void generate(HttpServletResponse response, int idProject, int idEntreprise) {
 		Project p=projectRepository.findById(idProject).orElse(null);
 		Entreprise entreprise= entrepriseRepository.findById(idEntreprise).orElse(null);
+if(projectRepository.getEtatOfProject(idProject)==Etat.done)
+{
 	//	Employee employee = employeeRepository.findById(idEmployee).orElse(null);
 		Document document = new Document(PageSize.A4);
         try {
@@ -364,6 +367,9 @@ return employeesFilter;
         document.add(paragraph21);
         document.add(paragraph22);
         document.add(paragraph23);
+        String QR_CODE_IMAGE_PATH = "./src/test/java/QRCode.png";
+        Image gif= Image.getInstance(QR_CODE_IMAGE_PATH);
+        document.add(gif);
         document.close();
 	} catch (DocumentException e) {
 		// TODO Auto-generated catch block
@@ -373,5 +379,5 @@ return employeesFilter;
 		e.printStackTrace();
 	}
 	}
-
-}
+	else log.info("le projet n est pas encore terminer ");
+}}
