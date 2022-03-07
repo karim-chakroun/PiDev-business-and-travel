@@ -172,7 +172,7 @@ public class ProjectRestController {
 				 @GetMapping(value = "/exportpdf/{project-id}/{entreprise-id}")
 					public void employeeReports(Model model, HttpServletResponse response,@PathVariable("project-id") int projectId,@PathVariable("entreprise-id") int idEntreprise) throws IOException {
 				        response.setContentType("application/pdf");
-				        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
+				        //DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
 				        Entreprise e=entrepriseService.retrieveEntreprise(idEntreprise);
 			        	  Project p=projectService.retrieveProject(projectId);
 
@@ -220,35 +220,31 @@ getQRCode(model, idEntreprise,projectId);
 
 			            return "infoEntreprise";
 			        }
-			 @ResponseBody
-				    @PostMapping("/sendHtmlEmail/{entreprise-id}/{project-id}")
-				    public String sendHtmlEmail(Model model,HttpServletResponse response,@PathVariable("entreprise-id") int idEntreprise,@PathVariable("project-id") int idProject) throws MessagingException, IOException {
-	        	  Entreprise e=entrepriseService.retrieveEntreprise(idEntreprise);
+				
+				    @RequestMapping("/sendHtmlEmail/{entreprise-id}/{project-id}")
+				    @ApiOperation(value = "envoyer un mail")
+				    public String sendHtmlEmail(Model model,HttpServletResponse response,@PathVariable("entreprise-id") int idEntreprise,@PathVariable("project-id") int idProject) throws IOException, MessagingException  {
+					employeeReports(model, response, idProject, idEntreprise);
+					Entreprise e=entrepriseService.retrieveEntreprise(idEntreprise);
 				        MimeMessage message = emailSender.createMimeMessage();
 
 				        boolean multipart = true;
 				        
 				        MimeMessageHelper helper = new MimeMessageHelper(message, multipart, "utf-8");
 				        
-				       
+				        
 				        
 				        helper.setTo(e.getEmail());
 				        helper.setSubject("Test email with attachments");
 				        
 				        helper.setText("Hello, Im testing email with attachments!");
-				      //  employeeReports(model, response, idProject, idEntreprise);
+				    
 			        	  Project p=projectService.retrieveProject(idProject);
-				        String path1 = "C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"/"+p.getIdProject()+".pdf";
-				        Multipart emailContent = new MimeMultipart();
-				      //Attachment body part.
-						MimeBodyPart pdfAttachment = new MimeBodyPart();
-						pdfAttachment.attachFile("C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"/"+p.getIdProject()+".pdf");
-						
-						//Attach body parts
-						MimeBodyPart textBodyPart = new MimeBodyPart();
-						textBodyPart.setText("My multipart text");
-						emailContent.addBodyPart(textBodyPart);
-						emailContent.addBodyPart(pdfAttachment);
+				      //  String path1 = "C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"/"+p.getIdProject()+".pdf";
+			        	 
+							
+						FileSystemResource file = new FileSystemResource("C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"_"+p.getIdProject()+".pdf");
+						helper.addAttachment(file.getFilename(), file);
 						
 				        
 
@@ -256,10 +252,17 @@ getQRCode(model, idEntreprise,projectId);
 				        helper.setSubject("Test send HTML email");
 				        
 				    
-				        emailSender.send(message);
+				      emailSender.send(message);
 
 				        return "Email Sent!";
 				    }
+		
 				 
 			
 }
+/*
+ * 
+ * 
+ * 
+ * 	 
+ * */

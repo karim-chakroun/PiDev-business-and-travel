@@ -1,8 +1,12 @@
 package tn.esprit.spring.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.ParticipationProject;
@@ -30,7 +34,7 @@ public interface ProjectService {
 	List<Employee> getEmployeeForProject(int idp);
 	//void AssignEmployeeFiltree(int ide);
 	//void EnvoyerRapport(HttpServletResponse response);
-
+	//void employeeReports(Model model, HttpServletResponse response, int projectId,int idEntreprise) throws IOException;
 	void generate(HttpServletResponse response,int idProject, int idEntreprise);
 	
 }

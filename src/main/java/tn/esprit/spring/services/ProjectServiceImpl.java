@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,7 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import com.google.zxing.WriterException;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -28,6 +33,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 import ch.qos.logback.classic.Logger;
 import lombok.extern.slf4j.Slf4j;
+import tn.esprit.spring.controller.ProjectRestController;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Etat;
@@ -256,7 +262,7 @@ return employeesFilter;
 	public void generate(HttpServletResponse response, int idProject, int idEntreprise) {
 		Project p=projectRepository.findById(idProject).orElse(null);
 		Entreprise entreprise= entrepriseRepository.findById(idEntreprise).orElse(null);
-if(projectRepository.getEtatOfProject(idProject)==Etat.done)
+if(p.getEtat()==Etat.done)
 {
 	//	Employee employee = employeeRepository.findById(idEmployee).orElse(null);
 		Document document = new Document(PageSize.A4);
@@ -380,4 +386,6 @@ if(projectRepository.getEtatOfProject(idProject)==Etat.done)
 	}
 	}
 	else log.info("le projet n est pas encore terminer ");
-}}
+}
+	
+}
