@@ -111,15 +111,32 @@ public class QuizServiceImpl implements IQuizService {
 				
 			}
 		}
-		Set<Question> specif = (Set<Question>) new HashSet<Question>();
+		Set<Question> specif = (Set<Question>) new HashSet<Question>();	
 		Random random=new Random();	
+		Random randomres=new Random();	
 		for(int i=0;i<3;i++)
 		{
 			int rand=random.nextInt(specif1.size());
 			specif.add(specif1.get(rand));
+			
 			specif1.remove(rand);
 		}
-		quiz.setQuestions(specif);		
+		for (Question question : specif) {
+			Set<Response> ress=question.getResponses();
+			List<Response> response1 = (List<Response>) new ArrayList<Response>();
+			for (Response res : ress) {
+				response1.add(res);
+			}
+			Set<Response> response = (Set<Response>) new HashSet<Response>();	
+			for(int i=0;i<2;i++)
+			{
+				int rand=randomres.nextInt(2);
+				response.add(response1.get(rand));
+				response1.remove(rand);
+			}
+			question.setResponses(response);
+		}
+		quiz.setQuestions(specif);
 		return quiz;
 	}
 	
@@ -144,19 +161,26 @@ public class QuizServiceImpl implements IQuizService {
 		res.setQuiz(q);
 		res.setCreationdate(now);
 		res.setScore(result);
-		res=getGold(res, q);
+		res=getGold(emp.getIdEmployee(),res, q);
 		resultRepository.save(res);
 		return res;
 	}
 	
-	public Result getGold(Result res , Quiz q)
+	public Result getGold(Integer emi,Result res , Quiz q)
 	{
-		if((q.getDifficulty().equals(Difficulty.HARD)) && (res.getScore()==q.getNumQuestion()) )
+		if(((q.getDifficulty().equals(Difficulty.HARD)) && (res.getScore()==q.getNumQuestion()))||
+		  (resultRepository.Listresultwithtype(emi, q.getTypeQuiz() , Badge.BRONZE)>=1)
+		  && (resultRepository.Listresultwithtype(emi, q.getTypeQuiz() , Badge.SILVER)>=1)
+		  &&(q.getDifficulty().equals(Difficulty.HARD))
+		  && (res.getScore() >q.getNumQuestion()/2))
 		{
 			res.setBadge(Badge.GOLD);
 			
 		}
-		else if ((q.getDifficulty().equals(Difficulty.MEDIUM)) && (res.getScore()==q.getNumQuestion()))
+		else if (((q.getDifficulty().equals(Difficulty.MEDIUM)) && (res.getScore()==q.getNumQuestion()))||
+				  (resultRepository.Listresultwithtype(emi, q.getTypeQuiz() , Badge.BRONZE)>=1) 
+				  && (q.getDifficulty().equals(Difficulty.MEDIUM))
+				  && (res.getScore()>q.getNumQuestion()/2))
 		{
 			res.setBadge(Badge.SILVER);
 		}

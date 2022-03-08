@@ -1,6 +1,9 @@
 package tn.esprit.spring.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,13 +17,17 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+import com.lowagie.text.DocumentException;
+
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Badge;
 import tn.esprit.spring.entities.Difficulty;
+import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Result;
 import tn.esprit.spring.entities.Type;
 import tn.esprit.spring.services.IResultService;
+import tn.esprit.spring.services.UserPDFExporter;
 
 @RestController
 @Api(tags = "management of  Results")
@@ -52,4 +59,26 @@ public class ResultController {
 	{
 		return resultService.resultbytype(id, type, badge);
 	}
+	@GetMapping("/employeeofthemonth")
+	public Employee employeofthemonth()
+	{
+		return resultService.employeeofthemonth();
+	}
+	@GetMapping("/employeeofthemonth/pdf")
+	public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+         
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+         
+        Employee listUsers = resultService.employeeofthemonth();
+         
+        UserPDFExporter exporter = new UserPDFExporter(listUsers);
+        exporter.export(response);
+         
+    }
+	
 }
