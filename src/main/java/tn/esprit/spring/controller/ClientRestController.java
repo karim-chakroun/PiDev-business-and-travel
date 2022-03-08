@@ -42,7 +42,7 @@ public class ClientRestController {
 
 	@Autowired
 	IClientService clientService;
-	
+	//test
 	@Autowired
 	IInvitationService invitationService;
 	
