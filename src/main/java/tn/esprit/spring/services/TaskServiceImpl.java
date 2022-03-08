@@ -76,9 +76,11 @@ ProjectService projectService;
 		t.setEmployees(e);
 		int idproject= t.getProjects().getIdProject();
 		
-
+t.setEtat(Etat.todo);
 		taskRepository.save(t);
-	
+	Project p= projectRepository.findById(idproject).orElse(null);
+	p.setEtat(Etat.inprogress);		 projectRepository.save(p);
+
 		 projectService.AcceptAndAssignProjectToEmployees(idproject, idEmployee);
 
 	}
@@ -90,6 +92,7 @@ ProjectService projectService;
 		for(Project p: projectRepository.findAll())
 		{ if (project.getEtat()==Etat.todo||project.getEtat()==Etat.inprogress)
 		{t.setProjects(project);
+		t.setEtat(Etat.todo);
 				taskRepository.save(t);}
 		else if (project.getEtat()==Etat.done)
 		log.info("le projet est terminé");
@@ -137,6 +140,7 @@ ProjectService projectService;
 			task.setEtatRemise(EtatRemise.inTime);
 		else 
 		    task.setEtatRemise(EtatRemise.delayed);
+		task.setEtat(Etat.done);
 		taskRepository.save(task);
 	}
 	//retourner le nbre de tache in time of project

@@ -61,7 +61,7 @@ public class ProjectRestController {
 	@Autowired
 	EmployeeRepository employeeRepository;
 	 @Autowired
-	  JavaMailSender emailSender;
+	  JavaMailSender emailSenderr;
 
 	// http://localhost:8089/SpringMVC/project/retrieve-all-project
 		@ApiOperation(value = "Récupérer la liste des projects")
@@ -220,13 +220,13 @@ getQRCode(model, idEntreprise,projectId);
 
 			            return "infoEntreprise";
 			        }
-				
+				// http://localhost:8089/SpringMVC/project/sendHtmlEmail/3/6
 				    @RequestMapping("/sendHtmlEmail/{entreprise-id}/{project-id}")
 				    @ApiOperation(value = "envoyer un mail")
 				    public String sendHtmlEmail(Model model,HttpServletResponse response,@PathVariable("entreprise-id") int idEntreprise,@PathVariable("project-id") int idProject) throws IOException, MessagingException  {
 					employeeReports(model, response, idProject, idEntreprise);
 					Entreprise e=entrepriseService.retrieveEntreprise(idEntreprise);
-				        MimeMessage message = emailSender.createMimeMessage();
+				        MimeMessage message = emailSenderr.createMimeMessage();
 
 				        boolean multipart = true;
 				        
@@ -252,7 +252,7 @@ getQRCode(model, idEntreprise,projectId);
 				        helper.setSubject("Test send HTML email");
 				        
 				    
-				      emailSender.send(message);
+				      emailSenderr.send(message);
 
 				        return "Email Sent!";
 				    }
