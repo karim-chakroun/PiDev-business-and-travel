@@ -36,6 +36,8 @@ public class Client implements Serializable {
 	private String password;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
+	@Enumerated(EnumType.STRING)
+	private Domain domain;
 	private String role;
     private boolean enabled;
     

@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,8 +37,6 @@ public class FeedBack  implements Serializable{
 	@NonNull private java.util.Date dateFeedback;
 	
 	@ToString.Exclude
-	@JsonIgnore
-
 	@ManyToOne
 	private Employee employees;
 }

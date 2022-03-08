@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +22,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class Comment  implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,13 +30,13 @@ public class Comment  implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idComment;
-	 private String body;
-
-	 private java.util.Date dateComment;
-	//@ToString.Exclude
+	@NonNull private String body;
+	@Temporal (TemporalType.DATE)
+	@NonNull private java.util.Date dateComment;
+	@ToString.Exclude
 	@ManyToOne
 	private Employee employees;
-	//@ToString.Exclude
+	@ToString.Exclude
 	@ManyToOne
 	private Post posts;
 

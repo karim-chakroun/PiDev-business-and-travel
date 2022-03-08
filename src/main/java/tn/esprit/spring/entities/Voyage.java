@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,16 +34,15 @@ public class Voyage  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idVoyage;
 	@NonNull private String depVille, desVille;
-private int nbIntervenant;
-	@NonNull 
-	@Temporal(TemporalType.DATE)
-	private java.util.Date dateDep, dateDest,dateRetour;
-	
+
+	@NonNull private java.util.Date dateDep, dateDest;
 
 	@Enumerated(EnumType.STRING)
 	private Object object;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="voyages")
 		private Set<Participation> participation;
-	
+	 @ToString.Exclude
+		@ManyToOne
+		private Entreprise entreprises;
 }

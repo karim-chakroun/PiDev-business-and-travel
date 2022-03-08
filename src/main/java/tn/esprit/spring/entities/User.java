@@ -1,5 +1,6 @@
 package tn.esprit.spring.entities;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -7,9 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,21 +26,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Followers {
+public class User  implements Serializable{
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idFollow;
-	
-	//private String FollowerName;
-	//private String ClientName;
-	//private int ClientId;
-	@NonNull private java.util.Date dateFollow;
-	@ToString.Exclude
-	@ManyToOne
-    @JoinColumn(name="from_user_fk")
-    private Employee from;
+	private int idUser;
+	@NonNull private String email, password, address;
+	@NonNull private int numTel;
+	@ManyToMany(cascade = CascadeType.ALL)
+    private Set<Role> roles;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="users")
+		private Set<Entreprise> entreprises;
 
-    @ManyToOne
-    @JoinColumn(name="to_user_fk")
-    private Employee to;
+
+	
 }

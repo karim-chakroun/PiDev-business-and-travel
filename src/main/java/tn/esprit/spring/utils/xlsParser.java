@@ -20,7 +20,7 @@ for (int i =1 ; i<nbrows ; i++) {
 	
 	invitation.setEmail(rc.ReadCellData(i, 0));
 	invitation.setFullName(rc.ReadCellData(i, 1));
-	invitation.setPhone(rc.ReadCellData(i, 2));
+	invitation.setPhone(rc.ReadIntCellData(i, 2));
 	
 	invitations.add(invitation);
 }

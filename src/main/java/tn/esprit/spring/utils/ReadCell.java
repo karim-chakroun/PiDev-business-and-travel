@@ -47,6 +47,23 @@ public static  Workbook   readFile (String path) {
 	DataFormatter formatter = new DataFormatter();
 	formatter.formatCellValue(cell);
 	value=cell.getStringCellValue().toString();    //getting cell value  
+	sheet.removeRow(row);
+	return value;               //returns the cell value  
+	}
+	
+	public  double ReadIntCellData(int vRow, int vColumn)  
+	{  
+	double value;          //variable for storing the cell value  
+	Workbook wb=null;           //initialize Workbook null  
+	wb = readFile("D:\\invitationsExcel.xlsx");
+	Sheet sheet=wb.getSheetAt(0);   //getting the XSSFSheet object at given index  
+	Row row=sheet.getRow(vRow); //returns the logical row  
+	Cell cell=row.getCell(vColumn); //getting the cell representing the given column  
+	DataFormatter formatter = new DataFormatter();
+	formatter.formatCellValue(cell);
+	value=cell.getNumericCellValue();    //getting cell value  
+	System.out.println("test remove "+row);
+	sheet.removeRow(row);
 	return value;               //returns the cell value  
 	}
 	

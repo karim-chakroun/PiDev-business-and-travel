@@ -28,8 +28,10 @@ import tn.esprit.spring.reponse.ResponseHandler;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Client;
+import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.repository.ClientRepository;
+import tn.esprit.spring.repository.EntrepriseRepository;
 import tn.esprit.spring.repository.InvitationRepository;
 import tn.esprit.spring.services.IClientService;
 import tn.esprit.spring.services.IInvitationService;
@@ -46,6 +48,9 @@ public class ClientRestController {
 	
 	@Autowired
 	ClientRepository clientRepository;
+	
+	@Autowired
+	EntrepriseRepository entrepriseRepo;
 	
 	@Autowired
 	InvitationRepository invitationRepo;
@@ -137,6 +142,8 @@ public class ClientRestController {
 	@PostMapping("/register")
 	@ResponseBody
 	public ResponseEntity<Object> addClient(@RequestBody Client c,HttpServletRequest request) {
+		
+		Entreprise e = new Entreprise();
 
 		Client client1 = clientRepository.findByEmailAddress(c.getEmail());
 		if (client1 == null) {
@@ -144,7 +151,14 @@ public class ClientRestController {
 			c.setPassword(passwordEncoder.encode(c.getPassword()));
 			c.setEnabled(true);
 			c.setRole("ROLE_ENTREPRISE");
+			
 			Client client = clientService.addClient(c);
+			
+			//set entreprise
+			e.setEmail(c.getEmail());
+			e.setNomEntreprise(c.getNom());
+			entrepriseRepo.save(e);
+			
 			return ResponseHandler.generateResponse("Successfully added data!", HttpStatus.OK, client);
 
 		} else {

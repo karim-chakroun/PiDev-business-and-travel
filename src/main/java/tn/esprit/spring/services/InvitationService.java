@@ -1,5 +1,8 @@
 package tn.esprit.spring.services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -35,13 +38,28 @@ public class InvitationService implements IInvitationService {
 	public List<Invitation> retrieveAllInvitations() {
 		// TODO Auto-generated method stub
 		
+		
+		
 		List<Invitation> listInv= invitationRepo.findAll();
+		return listInv;
+	}
+	
+	@Override
+	public List<Invitation> retrieveUnacceptedInvitation() {
+		// TODO Auto-generated method stub
+		
+		
+		
+		List<Invitation> listInv= invitationRepo.InvitationStatus("false");
 		return listInv;
 	}
 
 	@Override
 	public void addInvitation(List<Invitation> c) {
-		
+		Date date = new Date();
+		String strDateFormat = "hh:mm:ss a";
+	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+	    String formattedDate= dateFormat.format(date);
 		
 		
 		        
@@ -50,20 +68,35 @@ public class InvitationService implements IInvitationService {
 		for (Invitation inv : c) {
 			
 			
+			
+			
 			//message.setTo(MyConstants.FRIEND_EMAIL);
 	       // message.setSubject("Test Simple Email");
 	        //message.setText("Hello, Im testing Simple Email");
 
 	        // Send Message!
 	       // this.emailSender.send(message);
+			inv.setDateInvitation(date);
 			
 			inv.setStatus("false");
 			
 			invitationRepo.save(inv);
+			mailConf.send(inv.getEmail(), inv.getEmail(), "<h4>to accept the invitation click on this link:</h4>"+"http://localhost:8089/SpringMVC/Invitation/retrieve-invitation/"+inv.getIdInvitation()+"   <img src='https://media.discordapp.net/attachments/776190120927821846/950523223693484032/1646486323389.jpeg'>");
+		}
+		
+	}
+	
+	@Override
+	public void sendInacceptedInvitation(List<Invitation> c) {
+		
+for (Invitation inv : c) {
+			
+			
 			mailConf.send(inv.getEmail(), inv.getEmail(), "to accept the invitation click on this link: http://localhost:8089/SpringMVC/Invitation/retrieve-invitation/"+inv.getIdInvitation());
 		}
 		
 	}
+	
 
 	@Override
 	public void deleteInvitation(int id) {

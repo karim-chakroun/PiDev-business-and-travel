@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -24,25 +23,20 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@RequiredArgsConstructor
-@ToString
-public class Post  {
+@RequiredArgsConstructor
+public class Post  implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idPost;
-	 private String titre, body;
+	@NonNull private String titre, body;
 	
-	 private java.util.Date datePost;
-	// @ToString.Exclude
-		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
+	@NonNull private java.util.Date datePost;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="posts")
 		private Set<Comment> comments;
-	// @ToString.Exclude
-//@OneToMany(cascade = CascadeType.REMOVE,mappedBy="posts")
-//private Set<Like> likes;
-		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
-		private Set<likes> likes;
-@ManyToOne
-private Employee employees;
-
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="posts")
+		private Set<Rating> ratings;
 }

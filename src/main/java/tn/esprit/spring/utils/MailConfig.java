@@ -41,12 +41,17 @@ public class MailConfig {
     public void send(String to, String from, String email) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            
+            String htmlMsg = "<h3>Im testing send a HTML email</h3>"
+                    +"<img src='http://www.apache.org/images/asf_logo_wide.gif'>";
+            
+            mimeMessage.setContent(email, "text/html");
             MimeMessageHelper helper =
                     new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(EMAIL_CONFIRMATION_SUBJECT);
-            helper.setText(email);
+            //helper.setText(email);
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             //LOGGER.error("failed to send email", e);

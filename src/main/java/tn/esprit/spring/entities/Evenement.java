@@ -34,14 +34,9 @@ public class Evenement implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEvenement;
-	@NonNull private String nomEvenement, libelle,description,localisation;
-	private int nbreIntervenant=0;
-	@Enumerated(EnumType.STRING)
-	private Domain domain;
-	//@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date datedebEvenement;
-	//@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date datefinEvenement;
+	@NonNull private String nomEvenement, libelle;
+	@Temporal (TemporalType.DATE)
+	@NonNull private java.util.Date dateEvenement;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="evenements")
 		private Set<ParticipationEvenement> participationEvenements;
