@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +38,7 @@ public class Voyage  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idVoyage;
 	@NonNull private String depVille, desVille;
-private int nbIntervenant;
+    private int nbIntervenant=0;
 	@NonNull 
 	@Temporal(TemporalType.DATE)
 	private java.util.Date dateDep, dateDest,dateRetour;
@@ -47,5 +49,8 @@ private int nbIntervenant;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="voyages")
 		private Set<Participation> participation;
+	 @JsonIgnore
+	 @OneToMany(cascade = CascadeType.ALL, mappedBy="voyage")
+		private Set<Vote> votes;
 	
 }

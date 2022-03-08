@@ -55,5 +55,8 @@ public class Employee  implements Serializable {
 		private Set<Participation> participation;
 	 @ManyToOne
 	 private Entreprise entreprise;
+	 @JsonIgnore
+	 @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+		private Set<Vote> votes;
 
 }

@@ -9,7 +9,7 @@ import tn.esprit.spring.entities.Voyage;
 public interface IVoyageService {
 	
 	List<Voyage> RetrieveAllVoyages();
-	
+	List<Participation> RetrieveAllParticipationss();
 	Voyage addVoyage(Voyage v);
 	
 	void deleteVoyage(int id);
@@ -21,5 +21,7 @@ public interface IVoyageService {
 	Participation addParticipation(int voyageId, int employeeId) throws Exception;
 	
 	List<Employee> findEmployeeAffectedToVoyageByEntrepriseId(int entrepriseId);
-
+	void updateNbreIntervenant();
+	void voterVoyage(int voageId,int employeId,float note);
+	Float getMoyenneVote(int voyageId);
 }

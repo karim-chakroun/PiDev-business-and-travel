@@ -4,18 +4,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Participation;
+import tn.esprit.spring.entities.Vote;
 import tn.esprit.spring.entities.Voyage;
 import tn.esprit.spring.repository.EmployeeRepository;
 import tn.esprit.spring.repository.EntrepriseRepository;
 import tn.esprit.spring.repository.ParticipationRepository;
+import tn.esprit.spring.repository.VoteRepository;
 import tn.esprit.spring.repository.VoyageRepository;
-
+@EnableScheduling
 @Service
 @Slf4j
 public class VoyageServiceImpl implements IVoyageService{
@@ -28,6 +32,8 @@ public class VoyageServiceImpl implements IVoyageService{
 	EmployeeRepository employeeRepository;
 	@Autowired
 	EntrepriseRepository entrepriseRepository;
+	@Autowired
+	VoteRepository voteRepository;
 	@Override
 	public List<Voyage> RetrieveAllVoyages() {
 	   List<Voyage> listVoyage= voyageRepository.findAll();
@@ -79,6 +85,7 @@ public class VoyageServiceImpl implements IVoyageService{
 		participation.setEmployees(e);
 		participation.setVoyages(v);
 		return participationRepository.save(participation);
+		
 	}
 
 	@Override
@@ -88,6 +95,56 @@ public class VoyageServiceImpl implements IVoyageService{
 			 e.getParticipation().size()>0
 		).collect(Collectors.toList());
 	}
+	@Scheduled(cron = "*/5 * * * * *" )
+		@Override
+		public void updateNbreIntervenant() {
+			// TODO Auto-generated method stub
+			List<Participation> participations=   RetrieveAllParticipationss();
+			for (Participation pp :participations)
+			{
+				int idv= pp.getVoyages().getIdVoyage();
+				Voyage v = voyageRepository.findById(idv).orElse(null);
+				v.setNbIntervenant(voyageRepository.getNbreIntervenant(idv));
+				voyageRepository.save(v);
+			}
+			
+		}
+
+		@Override
+		public List<Participation> RetrieveAllParticipationss() {
+			// TODO Auto-generated method stub
+			return (List<Participation>) participationRepository.findAll();
+		}
+
+		@Override
+		public void voterVoyage(int voageId, int employeId,float note) {
+			Voyage v= voyageRepository.findById(voageId).orElseThrow(()->new IllegalArgumentException("no voyage with id ="+voageId));
+			Employee e= employeeRepository.findById(employeId).orElseThrow(()->new IllegalArgumentException("no employee with id ="+employeId));
+			Vote vote=new Vote();
+			vote.setNote(note);
+			vote.setEmployee(e);
+			vote.setVoyage(v);
+			voteRepository.save(vote);
+			
+		}
+
+		@Override
+		public Float getMoyenneVote(int voyageId) {
+			Voyage v= voyageRepository.findById(voyageId).orElseThrow(()->new IllegalArgumentException("no voyage with id ="+voyageId));
+			if(v.getVotes().size()==0){
+				return (float) 0;
+			}
+			float res=0;
+			
+				for (Vote vote : v.getVotes()) {
+					res+=vote.getNote();
+				}
+			res=res/v.getVotes().size();
+			
+			return res;
+			
+
+		}
 
 	
 }

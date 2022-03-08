@@ -70,4 +70,13 @@ public class VoyageRestController {
 				public List<Employee> findEmployeeAffectedToVoyageByEntrepriseId(@PathVariable("entrepriseId") int entrepriseId ){
 					return voyageService.findEmployeeAffectedToVoyageByEntrepriseId(entrepriseId);
 				}
+				@PostMapping("/add-vote/{voyageId}/{employeeId}/{note}")
+				public void addVote(@PathVariable("voyageId") int voyageId,@PathVariable("employeeId") int employeeId,@PathVariable("note") int note)  {
+					 voyageService.voterVoyage(voyageId, employeeId, note);
+				}
+				@GetMapping("/getMoyenneNote/{voyageId}")
+				public Float getMoyenne(@PathVariable("voyageId") int voyageId ){
+					return voyageService.getMoyenneVote(voyageId);
+				}
+						
 }
