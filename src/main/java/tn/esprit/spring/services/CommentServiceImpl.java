@@ -62,13 +62,15 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public void addComment(Comment e,int idpost) {
+	public void addComment(Comment e,int idpost,int iduser) {
 		// TODO Auto-generated method stub
 		//Date now = new Date();
 		//e.setDateComment(now);
 		Post p = postRepository.findById(idpost).orElse(null);
+		Employee c=emRepository.findById(iduser).orElse(null);
 		//p.getComments().add(e);
 		e.setPosts(p);
+		e.setEmployees(c);
 		CommentRepository.save(e);
 		
 	}

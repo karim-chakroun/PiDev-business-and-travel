@@ -9,7 +9,7 @@ import tn.esprit.spring.entities.Post;
 public interface CommentService {
 	List<Comment> retrieveAllComment();
 
-	void addComment(Comment e,int idpost);
+	void addComment(Comment e,int idpost ,int iduser);
 
 	void deletePosts(int id);
 
