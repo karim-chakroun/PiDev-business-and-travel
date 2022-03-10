@@ -1,9 +1,17 @@
 package tn.esprit.spring.services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import tn.esprit.spring.entities.BadWords;
@@ -26,6 +34,13 @@ public class PostsServiceImpl implements PostsService {
 	BadWordsRepo badwords;
 	@Autowired
 	LikeRepository LikeRepository;
+	@Autowired
+
+	private JavaMailSender javaMailSender;
+	@Autowired
+	private JavaMailSender javamil;
+	@Autowired
+	mailservice Ms;
 	//@Override
 
 	@Override
@@ -46,14 +61,20 @@ Employee employee=emRepository.findById(idUser).get();
 
 	boolean checkBody = checkBadWords(BadWordss,Body);
 	boolean checkTitle = checkBadWords(BadWordss,titre);
+	if(employee.getNumBan()==0&&employee.getOcc()<5)
+	{
 	if(checkBody == true || checkTitle == true)
 	{
 		System.out.print("Offensive language detected, publication failed.");
-	}else if (checkBody == false || checkTitle== false ) {
+		int occ=employee.getOcc()+1;
+		employee.setOcc(occ);
+		emRepository.save(employee);
+	}else if (checkBody == false || checkTitle== false ) 
+	{
 	
 	e.setEmployees(employee);
 		 postRepository.save(e);}
-	}
+	}}
 
 	@Override
 	public void deletePosts(int id) {
@@ -116,5 +137,26 @@ Employee employee=emRepository.findById(idUser).get();
 		return postRepository.findById(idpost).get();
 		
 	}
+	@Override
+	public void  sendMAil() {
+		Date date = new Date();
+		String strDateFormat = "hh:mm:ss a";
+	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+	    String formattedDate= dateFormat.format(date);
+	    SimpleMailMessage message= new SimpleMailMessage();
+		List<Employee> listEmployee=(List<Employee>) emRepository.findAll();
+		List<Employee>k= listEmployee.stream().filter(e->e.getOcc()>5).collect(Collectors.toList());
+		for(Employee in: k)
+		{
+			try {
+				Ms.sendBanEmail(in);
+				
+			} catch (MailException mailException) {
+				System.out.println(mailException);
+			}
+		}
+		
+		
+		
 	
-}
+}}

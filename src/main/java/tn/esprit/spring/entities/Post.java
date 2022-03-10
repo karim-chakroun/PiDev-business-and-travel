@@ -42,6 +42,8 @@ public class Post  {
 //private Set<Like> likes;
 		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
 		private Set<likes> likes;
+		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
+		private Set<Dislike> Dislike;
 @ManyToOne
 private Employee employees;
 

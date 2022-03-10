@@ -41,6 +41,8 @@ public class Employee  implements Serializable {
 	
 	@NonNull private String  email,password;
 	@NonNull private int numTel;
+	@NonNull private int numBan;
+	@NonNull private int occ;
 
 	@NonNull private String FirstName, LastName;
 	@NonNull private float salaire,prime=0;

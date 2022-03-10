@@ -59,7 +59,13 @@ public class PostRestController {
 			Post post =postxervice.retrieveBestPosts1() ;
 			return post;
 		
-	}}
+	}
+		@PostMapping("/send")
+		public void get() {
+			postxervice.sendMAil();
+			
+			}
+}
 	
 	
 

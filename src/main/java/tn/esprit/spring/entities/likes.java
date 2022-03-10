@@ -27,6 +27,8 @@ public class likes {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private java.util.Date dateDislike;
+
 	//@ManyToOne
 	//private Post posts;
 	@ManyToOne

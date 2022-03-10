@@ -53,11 +53,9 @@ public class Entreprise   implements Serializable{
 
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<Quiz> quizs;
-	 @ToString.Exclude
-		@JsonIgnore
+	
 
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<Voyage> voyages;
+		
 	 @ToString.Exclude
 		@JsonIgnore
 

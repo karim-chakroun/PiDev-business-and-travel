@@ -18,5 +18,6 @@ public interface PostsService {
 	Post retrievePosts(int id);
 	Employee retrieveBestPosts();
 	public Post retrieveBestPosts1();
+	public void  sendMAil();
 
 }
