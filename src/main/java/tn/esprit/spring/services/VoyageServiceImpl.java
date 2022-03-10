@@ -1,12 +1,25 @@
 package tn.esprit.spring.services;
 
+import java.awt.image.BufferedImage;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Employee;
@@ -34,6 +47,9 @@ public class VoyageServiceImpl implements IVoyageService{
 	EntrepriseRepository entrepriseRepository;
 	@Autowired
 	VoteRepository voteRepository;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	@Override
 	public List<Voyage> RetrieveAllVoyages() {
 	   List<Voyage> listVoyage= voyageRepository.findAll();
@@ -84,6 +100,7 @@ public class VoyageServiceImpl implements IVoyageService{
 		Participation participation = new Participation();
 		participation.setEmployees(e);
 		participation.setVoyages(v);
+		//sendEmail(e);
 		return participationRepository.save(participation);
 		
 	}
@@ -145,6 +162,34 @@ public class VoyageServiceImpl implements IVoyageService{
 			
 
 		}
+		@Override
+	    public BufferedImage generateQRCode(String urlText) throws Exception {
+	        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+	        BitMatrix bitMatrix = qrCodeWriter.encode("fronturl/voyage/"+urlText, BarcodeFormat.QR_CODE, 200, 200);
 
+	        return MatrixToImageWriter.toBufferedImage(bitMatrix);
+	    }
+		public void sendEmail (Employee emp) throws UnsupportedEncodingException, MessagingException{
+			String subject = "Please Verify your registration";
+			String senderName = "Women App Team";
+			String mailContent = "<p>Dear " + emp.getFirstName() + emp.getLastName() + ",</p>";
+			mailContent += "<p> please check the link below to verify your email : </p>";
+			
+			
+			mailContent += "<p> Thank you<br> Women App Team</p>";
+			
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message);
+			
+			helper.setFrom("promoesprit@gmail.com", senderName);
+			helper.setTo(emp.getEmail());
+			helper.setSubject(subject);
+			helper.setText(mailContent, true);
+			
+			mailSender.send(message);
+			System.out.println("email sent");
+			
+		}
+	
 	
 }

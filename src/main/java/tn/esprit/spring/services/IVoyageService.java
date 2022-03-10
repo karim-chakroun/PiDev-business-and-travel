@@ -1,6 +1,10 @@
 package tn.esprit.spring.services;
 
+import java.awt.image.BufferedImage;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Participation;
@@ -24,4 +28,6 @@ public interface IVoyageService {
 	void updateNbreIntervenant();
 	void voterVoyage(int voageId,int employeId,float note);
 	Float getMoyenneVote(int voyageId);
+	public  BufferedImage generateQRCode(String urlText) throws Exception;
+	public void sendEmail (Employee emp) throws UnsupportedEncodingException, MessagingException;
 }
