@@ -37,8 +37,8 @@ public class Entreprise   implements Serializable{
 	private String nomEntreprise, CodeTva, email,password;
 	private int numTel;
 
-	@Enumerated(EnumType.STRING)
-	private Domain domain;
+	//@Enumerated(EnumType.STRING)
+	//private Domain domain;
 	 
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")

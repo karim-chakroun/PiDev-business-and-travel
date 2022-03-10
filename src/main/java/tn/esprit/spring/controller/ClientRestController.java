@@ -212,6 +212,11 @@ public class ClientRestController {
 	public Client modifyClient(@PathVariable("client-id") Long clientId,@RequestBody Client client) {
 		return clientService.updateClient(clientId,client);
 	}
+	
+	@PutMapping("/modify-Domain/{client-id}")
+	public Client updateDomain(@PathVariable("client-id") Long clientId,@RequestBody Client client) {
+		return clientService.updateDomain(clientId,client);
+	}
 
 
 }

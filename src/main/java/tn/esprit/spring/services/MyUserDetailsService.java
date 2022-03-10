@@ -24,11 +24,13 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Client client = clientRepository.findByEmailAddress(email);
-        System.out.println(email);
+        String role=clientRepository.findRoleClientByEmail(email);
+        System.out.println(role);
         System.out.println("testestestesttest");
 
         final List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(client.getRole()));
+        //authorities.add(new SimpleGrantedAuthority(client.getRole()));
+        authorities.add(new SimpleGrantedAuthority(role));
 
         return  new User(client.getEmail(), client.getPassword(), authorities  );
     }

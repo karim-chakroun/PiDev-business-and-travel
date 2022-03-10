@@ -19,4 +19,7 @@ public interface IClientService {
 	
 	void forgetPassword(String email);
 
+	Client updateProfession(long id, Client c);
+	Client updateDomain(long id, Client c);
+
 }

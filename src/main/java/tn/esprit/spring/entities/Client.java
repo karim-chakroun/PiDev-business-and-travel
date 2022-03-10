@@ -1,13 +1,17 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,12 +38,15 @@ public class Client implements Serializable {
 	private java.util.Date dateNaissance;
 	private String email;
 	private String password;
+	private String domain;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
-	@Enumerated(EnumType.STRING)
-	private Domain domain;
+	//@Enumerated(EnumType.STRING)
+	//private Domain domain;
 	private String role;
     private boolean enabled;
+    @ManyToOne
+    private Role rolee;
     
 	 
 }

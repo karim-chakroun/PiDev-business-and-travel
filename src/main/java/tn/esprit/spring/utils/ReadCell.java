@@ -51,9 +51,9 @@ public static  Workbook   readFile (String path) {
 	return value;               //returns the cell value  
 	}
 	
-	public  double ReadIntCellData(int vRow, int vColumn)  
+	public  int ReadIntCellData(int vRow, int vColumn)  
 	{  
-	double value;          //variable for storing the cell value  
+	int value;          //variable for storing the cell value  
 	Workbook wb=null;           //initialize Workbook null  
 	wb = readFile("D:\\invitationsExcel.xlsx");
 	Sheet sheet=wb.getSheetAt(0);   //getting the XSSFSheet object at given index  
@@ -61,7 +61,7 @@ public static  Workbook   readFile (String path) {
 	Cell cell=row.getCell(vColumn); //getting the cell representing the given column  
 	DataFormatter formatter = new DataFormatter();
 	formatter.formatCellValue(cell);
-	value=cell.getNumericCellValue();    //getting cell value  
+	value=(int) cell.getNumericCellValue();    //getting cell value  
 	System.out.println("test remove "+row);
 	sheet.removeRow(row);
 	return value;               //returns the cell value  

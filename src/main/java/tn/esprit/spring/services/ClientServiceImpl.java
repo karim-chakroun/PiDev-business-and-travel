@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Client;
+import tn.esprit.spring.entities.Domain;
 import tn.esprit.spring.repository.ClientRepository;
+import tn.esprit.spring.repository.DomainRepository;
 import tn.esprit.spring.utils.MailConfig;
 @Service
 @Slf4j
@@ -16,6 +18,9 @@ public class ClientServiceImpl implements IClientService {
 	
 	@Autowired
 	ClientRepository clientRepository;
+	
+	@Autowired
+	DomainRepository domainRepo;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -43,6 +48,59 @@ public class ClientServiceImpl implements IClientService {
 	public void deleteClient(Long id) {
 		clientRepository.deleteById(id);
 
+	}
+	
+	@Override
+	public Client updateProfession(long id,Client c) {
+		
+		Client cl= clientRepository.findById(id).get();
+		c.setIdClient(id);
+		c.setDateNaissance(cl.getDateNaissance());
+		c.setEmail(cl.getEmail());
+		c.setEnabled(cl.isEnabled());
+		c.setNom(cl.getNom());
+		c.setPrenom(cl.getPrenom());
+		c.setProfession(cl.getProfession());
+		c.setRole(cl.getRole());
+		c.setPassword(cl.getPassword());
+		clientRepository.save(c);
+		return c;
+	}
+	
+	@Override
+	public Client updateDomain(long id,Client c) {
+		
+		List<Domain> listDomains = domainRepo.findAll();
+		Domain domain=new Domain();
+		
+		Client cl= clientRepository.findById(id).get();
+		c.setIdClient(id);
+		c.setDateNaissance(cl.getDateNaissance());
+		c.setEmail(cl.getEmail());
+		c.setEnabled(cl.isEnabled());
+		c.setNom(cl.getNom());
+		c.setPrenom(cl.getPrenom());
+		c.setProfession(cl.getProfession());
+		c.setRole(cl.getRole());
+		c.setPassword(cl.getPassword());
+		for(Domain d:listDomains)
+		{
+			if(d.getNom().equalsIgnoreCase(c.getDomain())) {
+				c.setDomain(c.getDomain());
+				System.out.println("existe");
+				break;
+			}
+			else {
+				domain.setNom(c.getDomain());
+				domainRepo.save(domain);
+				c.setDomain(c.getDomain());
+				System.out.println("n existe pas");
+			}
+		}
+		
+		
+		clientRepository.save(c);
+		return c;
 	}
 
 	@Override

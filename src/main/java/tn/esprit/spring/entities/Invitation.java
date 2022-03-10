@@ -32,7 +32,7 @@ public class Invitation  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idInvitation;
 	private String email;
-	private double phone;
+	private int phone;
 	private String fullName;
 	private String status;
 	@Temporal (TemporalType.DATE)
