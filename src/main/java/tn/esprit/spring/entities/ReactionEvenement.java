@@ -15,28 +15,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 //@RequiredArgsConstructor
-public class ParticipationEvenement implements Serializable {
-	
+public class ReactionEvenement implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idParticipEvenement;
-	@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date dateParticipation=new Date(System.currentTimeMillis());
+	private int idReactionEvenement;
 	@ToString.Exclude
 	@ManyToOne
-	private Entreprise entreprises;
+	private Reaction Reactions;
 	 @ToString.Exclude
 		@ManyToOne
 		private Evenement evenements;

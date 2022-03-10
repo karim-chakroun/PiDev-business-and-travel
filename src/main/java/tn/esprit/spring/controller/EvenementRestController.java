@@ -18,6 +18,7 @@ import tn.esprit.spring.entities.Evenement;
 import tn.esprit.spring.entities.ParticipationEvenement;
 import tn.esprit.spring.services.EvenementService;
 import tn.esprit.spring.services.IEmployeeService;
+import tn.esprit.spring.services.MailService;
 
 @RestController
 @Api(tags = "Gestion des evenements")
@@ -27,6 +28,7 @@ public class EvenementRestController {
 	EvenementService evenementService;
 	@Autowired
 	IEmployeeService employeeService;
+	
 	// http://localhost:8088/SpringMVC/evenement/retrieve-all-evenement
 		@ApiOperation(value = "Récupérer la liste des evenements")
 		@GetMapping("/retrieve-all-evenements")
@@ -80,6 +82,11 @@ public class EvenementRestController {
 			public List<Evenement> getEvenementDomain(@PathVariable("ide") int ide) {
 				return( List<Evenement>)evenementService.getEvenementForEntreprise(ide);
 			}
+			/*@PostMapping("/send")
+			public void sendmail()
+			{
+				evenementService.sendEmail();
+			}*/
 }
 
 

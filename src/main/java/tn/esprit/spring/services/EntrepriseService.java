@@ -15,5 +15,6 @@ public interface EntrepriseService {
 	Entreprise updateEntreprise(Entreprise e);
 
 	Entreprise retrieveEntreprise(int id);
+	
 
 }

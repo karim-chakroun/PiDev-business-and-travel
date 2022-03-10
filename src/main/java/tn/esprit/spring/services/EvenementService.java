@@ -19,4 +19,6 @@ public interface EvenementService {
 	void updateNbreIntervenantEvenement();
 	List<ParticipationEvenement> retrieveAllParticipationEvenements();
 	List<Evenement> getEvenementForEntreprise(int ide);
+	//void sendEmail();
+
 }

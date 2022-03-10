@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class EvenementServiceImpl implements EvenementService {
 	EntrepriseRepository entrepriseRepository;
 	@Autowired
 	ParticipationEvenementRepository participationEvenementRepository;
+	/*@Autowired
+	MailService mailService;*/
 		@Override
 		public List<Evenement> retrieveAllEvenements() {
 			// TODO Auto-generated method stub
@@ -98,5 +101,20 @@ public class EvenementServiceImpl implements EvenementService {
 			return evenementFilter;
 
 				}
+				/*@Override
+				public void sendEmail() {
+					List<Entreprise> listEmployee=(List<Entreprise>) entrepriseRepository.findAll();
+					for(Entreprise in: listEmployee)
+					{
+						try {
+							mailService.sendWarningEmail(in);;
+							
+						} catch (MailException mailException) {
+							System.out.println(mailException);
+						}
+					
+				}
+				}*/
+				}
 
-}
+
