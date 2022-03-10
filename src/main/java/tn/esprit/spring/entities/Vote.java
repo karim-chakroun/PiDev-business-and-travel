@@ -2,16 +2,20 @@ package tn.esprit.spring.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -19,21 +23,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-//@NoArgsConstructor
-@RequiredArgsConstructor
-public class likes {
-	private static final long serialVersionUID = 1L;
-
+@NoArgsConstructor
+public class Vote {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private java.util.Date dateDislike;
-
-	//@ManyToOne
-	//private Post posts;
+	private Float Note;
 	@ManyToOne
-	private Post posts;
+	private Employee employee;
 	@ManyToOne
-	private Employee employees;
-
+	private Voyage voyage;
 }

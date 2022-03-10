@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,5 +49,7 @@ private int nbIntervenant;
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="voyages")
 		private Set<Participation> participation;
-	
+	 @JsonIgnore
+	 @OneToMany(cascade = CascadeType.ALL, mappedBy="voyage")
+		private Set<Vote> votes;
 }

@@ -34,9 +34,9 @@ public class UserPDFExporter {
         Font font2 = FontFactory.getFont(FontFactory.TIMES_ROMAN);
         font2.setSize(18);
         font2.setColor(Color.black); 
-        Paragraph p = new Paragraph("List of Users", font);
-        Paragraph p2=new Paragraph("Conguratulation dear employee"+employee.getFirstName()+" "+ employee.getLastName()+". you have "
-        		+ "earned the golden badge and you were name the employeeof the month hope you keep doing well and excedding your limit");
+        Paragraph p = new Paragraph("List of Users \n \n \n \n", font);
+        Paragraph p2=new Paragraph("Conguratulation dear employee "+employee.getFirstName()+" "+ employee.getLastName()+". you have "
+        		+ "earned the golden badge and and a behave of the company you were given this cirtaficate as proof of your acheivment and you were name the employeeof the month hope you keep doing well and excedding your limit");
         p.setAlignment(Paragraph.ALIGN_CENTER);
         p2.setAlignment(Paragraph.ALIGN_JUSTIFIED); 
         document.add(p);

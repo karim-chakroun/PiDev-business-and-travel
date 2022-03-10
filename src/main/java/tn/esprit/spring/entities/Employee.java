@@ -47,7 +47,8 @@ public class Employee  implements Serializable {
 	@NonNull private int nbreProjet=0;
 	@Temporal (TemporalType.DATE)
 	@NonNull private java.util.Date dateNaissance;
-
+	@NonNull private int numBan;
+	@NonNull private int occ;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
 	@Enumerated(EnumType.STRING)
@@ -100,4 +101,8 @@ public class Employee  implements Serializable {
 
 	    @OneToMany(mappedBy="from")
 	    private List<Followers> following;
+	    
+		 @JsonIgnore
+		 @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+			private Set<Vote> votes;
 }

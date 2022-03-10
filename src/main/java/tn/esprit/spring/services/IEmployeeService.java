@@ -14,4 +14,6 @@ public interface IEmployeeService {
 	Employee updateEmployee(Employee e, int idEntreprise);
 
 	Employee retrieveEmployee(int id);
+	
+
 }
