@@ -100,7 +100,7 @@ public class VoyageServiceImpl implements IVoyageService{
 		Participation participation = new Participation();
 		participation.setEmployees(e);
 		participation.setVoyages(v);
-		//sendEmail(e);
+		sendEmail(e);
 		return participationRepository.save(participation);
 		
 	}
@@ -112,7 +112,7 @@ public class VoyageServiceImpl implements IVoyageService{
 			 e.getParticipation().size()>0
 		).collect(Collectors.toList());
 	}
-	//@Scheduled(cron = "*/5 * * * * *" )
+	@Scheduled(cron = "*/5 * * * * *" )
 		@Override
 		public void updateNbreIntervenant() {
 			// TODO Auto-generated method stub
@@ -170,13 +170,13 @@ public class VoyageServiceImpl implements IVoyageService{
 	        return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	    }
 		public void sendEmail (Employee emp) throws UnsupportedEncodingException, MessagingException{
-			String subject = "Please Verify your registration";
-			String senderName = "Women App Team";
-			String mailContent = "<p>Dear " + emp.getFirstName() + emp.getLastName() + ",</p>";
-			mailContent += "<p> please check the link below to verify your email : </p>";
+			String subject = "Participation";
+			String senderName = "promoesprit@gmail.com";
+			String mailContent = "<p>Cher " + emp.getFirstName() + emp.getLastName() + ",</p>";
+			mailContent += "<p> Vous etes l'un des participants du voyage </p>";
 			
 			
-			mailContent += "<p> Thank you<br> Women App Team</p>";
+			mailContent += "<p> Merci<br> promoesprit@gmail.com</p>";
 			
 			MimeMessage message = mailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message);

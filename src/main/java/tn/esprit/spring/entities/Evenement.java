@@ -45,5 +45,8 @@ public class Evenement implements Serializable {
 	 @ToString.Exclude
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="evenements")
 		private Set<ParticipationEvenement> participationEvenements;
+	 @ToString.Exclude
+		@OneToMany(cascade = CascadeType.ALL, mappedBy="evenements")
+		private Set<Reaction> Reactions;
 
 }

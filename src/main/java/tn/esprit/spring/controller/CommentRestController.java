@@ -32,10 +32,10 @@ public class CommentRestController {
 				List<Comment> listComment = commentservice.retrieveCooment(postId);
 				return listComment;
 			}
-			@PostMapping("/add-Comment/{Post-id}")
-			public void addComment(@RequestBody Comment e,@PathVariable("Post-id") int postId) {
+			@PostMapping("/add-Comment/{Post-id}/{user-id}")
+			public void addComment(@RequestBody Comment e,@PathVariable("Post-id") int postIdi,@PathVariable("user-id") int postIdu) {
 				//System.out.print(e.toString());
-				commentservice.addComment(e,postId);
+				commentservice.addComment(e,postIdi,postIdu);
 				
 			}
 			// http://localhost:8089/SpringMVC/task/remove-task/1

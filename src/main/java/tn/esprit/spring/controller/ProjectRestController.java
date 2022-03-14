@@ -184,7 +184,7 @@ getQRCode(model, idEntreprise,projectId);
 					
 						
 					}
-				 private static final String QR_CODE_IMAGE_PATH = "./src/test/java/QRCode.png";
+				 private static final String QR_CODE_IMAGE_PATH = "./src/main/java/QRCode.png";
 				 @GetMapping(value = "/qrcode/{entreprise-id}/{project-id}")
 			        public String getQRCode( Model model,@PathVariable("entreprise-id") int entrepriseId,@PathVariable("project-id") int idProject){
 			        	  Entreprise e=entrepriseService.retrieveEntreprise(entrepriseId);
@@ -243,7 +243,7 @@ getQRCode(model, idEntreprise,projectId);
 				      //  String path1 = "C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"/"+p.getIdProject()+".pdf";
 			        	 
 							
-						FileSystemResource file = new FileSystemResource("C:/Users/arafa/Downloads/rapport_id"+e.getIdEntreprise()+"_"+p.getIdProject()+".pdf");
+						FileSystemResource file = new FileSystemResource("C:/Users/momen/Downloads/rapport_id"+e.getIdEntreprise()+"_"+p.getIdProject()+".pdf");
 						helper.addAttachment(file.getFilename(), file);
 						
 				        

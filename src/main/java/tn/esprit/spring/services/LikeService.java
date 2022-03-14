@@ -11,7 +11,7 @@ import tn.esprit.spring.entities.Post;
 public interface LikeService {
 	List<likes> retrieveAllRates();
 
-	likes addRate(likes e);
+	likes addRate(likes e,int id1i,int id2);
 
 	void deletePosts(int id);
 
