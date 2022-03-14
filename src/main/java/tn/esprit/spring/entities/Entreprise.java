@@ -10,8 +10,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +29,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+//@RequiredArgsConstructor
 public class Entreprise   implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -34,27 +37,37 @@ public class Entreprise   implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEntreprise;
 	
-	private String nomEntreprise, CodeTva, email,password;
-	private int numTel;
+	 private String nomEntreprise, CodeTva, email,password;
+	 private int numTel;
 
-	//@Enumerated(EnumType.STRING)
-	//private Domain domain;
-	 
+	@Enumerated(EnumType.STRING)
+	private Domain domain;
+	
 	 @ToString.Exclude
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
+		@JsonIgnore
+
+		@ManyToMany(cascade = CascadeType.PERSIST)
 		private Set<Project> projects;
 	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<Quiz> quizs;
 	 @ToString.Exclude
+		@JsonIgnore
+
+		@ManyToOne
+		private Voyage voyages;
+	 @ToString.Exclude
+		@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
-		private Set<Voyage> voyages;
+		private Set<Employee> employees;
 	@ToString.Exclude
+	@JsonIgnore
+
 		@OneToMany(cascade = CascadeType.ALL, mappedBy="entreprises")
 		private Set<ParticipationEvenement> participationEvenements;
-	 @ToString.Exclude
-		@ManyToOne
-		private User users;
 	 
 	 
 }

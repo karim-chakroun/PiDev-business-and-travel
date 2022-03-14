@@ -84,9 +84,9 @@ public class InvitationRestController {
 	@ApiOperation(value = "Récupérer invitation")
 	@GetMapping("/retrieve-invitation/{inv-id}")
 	public Invitation retrieveInvitation(@PathVariable("inv-id") int invId) {
-		xlsParser xls = new xlsParser();
-		xls.parser();
-		System.out.println("xlssss test test"+ xlsParser.nbrows);
+		//xlsParser xls = new xlsParser();
+		//xls.parser();
+		//System.out.println("xlssss test test"+ xlsParser.nbrows);
 		return invitationService.retrieveInvitation(invId);
 	}
 	

@@ -1,14 +1,15 @@
 package tn.esprit.spring.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ParticipationEvenement implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -31,8 +32,8 @@ public class ParticipationEvenement implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idParticipEvenement;
-	
-	@NonNull private java.util.Date dateParticipation;
+	@Temporal (TemporalType.DATE)
+	@NonNull private java.util.Date dateParticipation=new Date(System.currentTimeMillis());
 	@ToString.Exclude
 	@ManyToOne
 	private Entreprise entreprises;

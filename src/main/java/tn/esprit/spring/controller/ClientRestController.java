@@ -30,8 +30,10 @@ import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Invitation;
+import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.repository.ClientRepository;
 import tn.esprit.spring.repository.EntrepriseRepository;
+import tn.esprit.spring.repository.IRoleRepository;
 import tn.esprit.spring.repository.InvitationRepository;
 import tn.esprit.spring.services.IClientService;
 import tn.esprit.spring.services.IInvitationService;
@@ -48,6 +50,9 @@ public class ClientRestController {
 	
 	@Autowired
 	ClientRepository clientRepository;
+	
+	@Autowired
+	IRoleRepository roleRepository;
 	
 	@Autowired
 	EntrepriseRepository entrepriseRepo;
@@ -146,11 +151,14 @@ public class ClientRestController {
 		Entreprise e = new Entreprise();
 
 		Client client1 = clientRepository.findByEmailAddress(c.getEmail());
+		Role rolee = roleRepository.getById(1);
+		
 		if (client1 == null) {
 			System.out.println("test1");
 			c.setPassword(passwordEncoder.encode(c.getPassword()));
 			c.setEnabled(true);
 			c.setRole("ROLE_ENTREPRISE");
+			c.setRolee(rolee);
 			
 			Client client = clientService.addClient(c);
 			
@@ -174,6 +182,7 @@ public class ClientRestController {
 	public ResponseEntity<Object> addClientEmp(@RequestBody Client c,@PathVariable("inv-id") int invId,HttpServletRequest request) {
 
 		Client client1 = clientRepository.findByEmailAddress(c.getEmail());
+		Role rolee = roleRepository.getById(2);
 		Invitation inv = invitationRepo.findById(invId).orElse(null);
 		if(inv.getStatus().equalsIgnoreCase("true")) {
 			
@@ -182,6 +191,7 @@ public class ClientRestController {
 				c.setPassword(passwordEncoder.encode(c.getPassword()));
 				c.setEnabled(true);
 				c.setRole("ROLE_EMPLOYEE");
+				c.setRolee(rolee);
 				Client client = clientService.addClient(c);
 				return ResponseHandler.generateResponse("Successfully added data!", HttpStatus.OK, client);
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.esprit.spring.entities.Client;
-import tn.esprit.spring.entities.Domain;
+import tn.esprit.spring.entities.Domaines;
 import tn.esprit.spring.repository.ClientRepository;
 import tn.esprit.spring.repository.DomainRepository;
 import tn.esprit.spring.utils.MailConfig;
@@ -70,8 +70,8 @@ public class ClientServiceImpl implements IClientService {
 	@Override
 	public Client updateDomain(long id,Client c) {
 		
-		List<Domain> listDomains = domainRepo.findAll();
-		Domain domain=new Domain();
+		List<Domaines> listDomains = domainRepo.findAll();
+		Domaines domaines=new Domaines();
 		
 		Client cl= clientRepository.findById(id).get();
 		c.setIdClient(id);
@@ -83,7 +83,7 @@ public class ClientServiceImpl implements IClientService {
 		c.setProfession(cl.getProfession());
 		c.setRole(cl.getRole());
 		c.setPassword(cl.getPassword());
-		for(Domain d:listDomains)
+		for(Domaines d:listDomains)
 		{
 			if(d.getNom().equalsIgnoreCase(c.getDomain())) {
 				c.setDomain(c.getDomain());
@@ -91,8 +91,8 @@ public class ClientServiceImpl implements IClientService {
 				break;
 			}
 			else {
-				domain.setNom(c.getDomain());
-				domainRepo.save(domain);
+				domaines.setNom(c.getDomain());
+				domainRepo.save(domaines);
 				c.setDomain(c.getDomain());
 				System.out.println("n existe pas");
 			}
