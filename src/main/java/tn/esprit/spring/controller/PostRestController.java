@@ -3,6 +3,7 @@ package tn.esprit.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class PostRestController {
 	PostsService postxervice;
 	@Autowired
 	LikeService likesservice;
-	
+	@CrossOrigin(origins = "*")
 	@GetMapping("/retrive-posts")
 	public List<Post> getPosts() {
 		List<Post> listPost = postxervice.retrieveAllPosts();
@@ -38,8 +39,9 @@ public class PostRestController {
 	public void removeEmployee(@PathVariable("post-id") int employeeId) {
 		postxervice.deletePosts(employeeId);
 	}
+	@CrossOrigin(origins = "*")
 		@PostMapping("/add-post/{User_id}")
-		public void AddPost(@RequestBody Post p,@PathVariable("User_id") int userid)
+		public void AddPost(@RequestBody Post p,@PathVariable("User_id") long userid)
 		{
 			postxervice.addPosts(p,userid);
 		}

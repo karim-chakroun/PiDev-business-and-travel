@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,7 +90,7 @@ public class InvitationRestController {
 		//System.out.println("xlssss test test"+ xlsParser.nbrows);
 		return invitationService.retrieveInvitation(invId);
 	}
-	
+	@CrossOrigin(origins = "*")
 	@GetMapping("/retrieveUnacceptedInvitations")
 	@ResponseBody
 	public List<Invitation> getUnacceptedInvitations() {

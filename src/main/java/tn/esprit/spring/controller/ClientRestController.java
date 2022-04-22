@@ -144,6 +144,7 @@ public class ClientRestController {
 		 clientService.forgetPassword(email);
 	}
 
+	@CrossOrigin(origins = "*")
 	@PostMapping("/register")
 	@ResponseBody
 	public ResponseEntity<Object> addClient(@RequestBody Client c,HttpServletRequest request) {

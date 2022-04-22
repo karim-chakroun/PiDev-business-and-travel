@@ -47,6 +47,8 @@ public class Client implements Serializable {
     private boolean enabled;
     @ManyToOne
     private Role rolee;
+    private int numBan;
+	private int occ;
     
 	 
 }

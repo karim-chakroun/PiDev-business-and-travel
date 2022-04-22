@@ -20,6 +20,7 @@ import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.repository.BadWordsRepo;
+import tn.esprit.spring.repository.ClientRepository;
 import tn.esprit.spring.repository.EmployeeRepository;
 import tn.esprit.spring.repository.LikeRepository;
 import tn.esprit.spring.repository.PostRepository;
@@ -29,6 +30,9 @@ public class PostsServiceImpl implements PostsService {
 	PostRepository postRepository;
 	@Autowired
 	EmployeeRepository emRepository;
+	
+	@Autowired
+	ClientRepository clientRepo;
 	@Autowired
 	BadWordsRepo badwords;
 	@Autowired
@@ -50,28 +54,29 @@ public class PostsServiceImpl implements PostsService {
 	}
 
 	@Override
-	public void addPosts(Post e,int idUser) {
+	public void addPosts(Post e,long idUser) {
 		
 		//e.setDatePost(now);
-Employee employee=emRepository.findById(idUser).get();
+		Client client=clientRepo.findById(idUser).get();
+//Employee employee=emRepository.findById(idUser).get();
 	String Body = e.getBody();
 	String titre=e.getTitre();
 	List<BadWords> BadWordss = (List<BadWords>) badwords.findAll();
 
 	boolean checkBody = checkBadWords(BadWordss,Body);
 	boolean checkTitle = checkBadWords(BadWordss,titre);
-	if(employee.getNumBan()==0&&employee.getOcc()<5)
+	if(client.getNumBan()==0&&client.getOcc()<5)
 	{
 	if(checkBody == true || checkTitle == true)
 	{
 		System.out.print("Offensive language detected, publication failed.");
-		int occ=employee.getOcc()+1;
-		employee.setOcc(occ);
-		emRepository.save(employee);
+		int occ=client.getOcc()+1;
+		client.setOcc(occ);
+		clientRepo.save(client);
 	}else if (checkBody == false || checkTitle== false ) 
 	{
 	
-	e.setEmployees(employee);
+	e.setC(client);
 		 postRepository.save(e);}
 	}}
 

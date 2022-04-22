@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,17 +36,23 @@ public class Post  {
 	 private String titre, body;
 	
 	 private java.util.Date datePost;
-	// @ToString.Exclude
+	@ToString.Exclude
+	@JsonIgnore
 		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
 		private Set<Comment> comments;
 	// @ToString.Exclude
 //@OneToMany(cascade = CascadeType.REMOVE,mappedBy="posts")
 //private Set<Like> likes;
+		 @ToString.Exclude
+         @JsonIgnore
 		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
 		private Set<likes> likes;
+		 @ToString.Exclude
+
 		@OneToMany(cascade = CascadeType.REMOVE, mappedBy="posts")
+		 @JsonIgnore
 		private Set<Dislike> Dislike;
 @ManyToOne
-private Employee employees;
+private Client c;
 
 }

@@ -9,7 +9,7 @@ import tn.esprit.spring.entities.Post;
 public interface PostsService {
 	List<Post> retrieveAllPosts();
 
-	void addPosts(Post e,int idUser);
+	void addPosts(Post e,long idUser);
 
 	void deletePosts(int id);
 
