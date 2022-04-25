@@ -34,6 +34,6 @@ public class likes {
 	@ManyToOne
 	private Post posts;
 	@ManyToOne
-	private Employee employees;
+	private Client client;
 
 }

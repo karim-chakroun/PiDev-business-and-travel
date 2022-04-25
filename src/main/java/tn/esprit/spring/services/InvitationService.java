@@ -81,7 +81,7 @@ public class InvitationService implements IInvitationService {
 			inv.setStatus("false");
 			
 			invitationRepo.save(inv);
-			mailConf.send(inv.getEmail(), inv.getEmail(), "<h4>to accept the invitation click on this link:</h4>"+"http://localhost:8089/SpringMVC/Invitation/retrieve-invitation/"+inv.getIdInvitation()+"   <img src='https://media.discordapp.net/attachments/776190120927821846/950523223693484032/1646486323389.jpeg'>");
+			mailConf.send(inv.getEmail(), inv.getEmail(), "<h4>to accept the invitation click on this link:</h4>"+"http://localhost:4200/invitation/"+inv.getIdInvitation()+"   <img src='https://media.discordapp.net/attachments/776190120927821846/950523223693484032/1646486323389.jpeg'>");
 		}
 		
 	}
@@ -92,10 +92,21 @@ public class InvitationService implements IInvitationService {
 for (Invitation inv : c) {
 			
 			
-			mailConf.send(inv.getEmail(), inv.getEmail(), "to accept the invitation click on this link: http://localhost:8089/SpringMVC/Invitation/retrieve-invitation/"+inv.getIdInvitation());
+			mailConf.send(inv.getEmail(), inv.getEmail(), "to accept the invitation click on this link: http://localhost:4200/invitation/"+inv.getIdInvitation());
 		}
 		
 	}
+	
+	@Override
+	public void sendInvitation(int id) {
+		
+		Invitation inv = invitationRepo.findById(id).orElse(null);
+					
+					
+					mailConf.send(inv.getEmail(), inv.getEmail(), "to accept the invitation click on this link: http://localhost:4200/invitation/"+inv.getIdInvitation());
+				
+				
+			}
 	
 
 	@Override

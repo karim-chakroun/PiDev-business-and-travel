@@ -53,11 +53,11 @@ public class Employee  implements Serializable {
 	private Profession profession;
 	@Enumerated(EnumType.STRING)
 	private Specialite specialite;
-	 @ToString.Exclude
-		@JsonIgnore
+	// @ToString.Exclude
+		//@JsonIgnore
 
-		@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
-		private Set<Comment> comments;
+		/*@OneToMany(cascade = CascadeType.ALL, mappedBy="employees")
+		private Set<Comment> comments;*/
 	
 	 @ToString.Exclude
 		@JsonIgnore
@@ -94,13 +94,13 @@ public class Employee  implements Serializable {
 
 		@ManyToOne
 		private Entreprise entreprises;
-	 @OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
+	/* @OneToMany(cascade = CascadeType.REMOVE, mappedBy="employees")
 		private Set<likes> likes;
 		@OneToMany(mappedBy="to")
 	    private List<Followers> followers;
 
 	    @OneToMany(mappedBy="from")
-	    private List<Followers> following;
+	    private List<Followers> following;*/
 	    
 		 @JsonIgnore
 		 @OneToMany(cascade = CascadeType.ALL, mappedBy="employee")

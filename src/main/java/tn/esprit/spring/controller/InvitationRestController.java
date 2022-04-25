@@ -70,8 +70,8 @@ public class InvitationRestController {
 
         return "Email Sent!";
     }
-	
-	@PostMapping("/add-InvitationsExcel")
+	@CrossOrigin(origins = "*")
+	@GetMapping("/add-InvitationsExcel")
 	public void ajouterListeInvitationsFromExcel(){
 		invitationService.addInvitation(parser);
 	}
@@ -81,7 +81,7 @@ public class InvitationRestController {
 	public void sendUnacceptedInvitations(){
 		invitationService.sendInacceptedInvitation(invitationService.retrieveUnacceptedInvitation());
 	}
-	
+	@CrossOrigin(origins = "*")
 	@ApiOperation(value = "Récupérer invitation")
 	@GetMapping("/retrieve-invitation/{inv-id}")
 	public Invitation retrieveInvitation(@PathVariable("inv-id") int invId) {
@@ -90,12 +90,32 @@ public class InvitationRestController {
 		//System.out.println("xlssss test test"+ xlsParser.nbrows);
 		return invitationService.retrieveInvitation(invId);
 	}
+	
+	@ApiOperation(value = "Récupérer invitation")
+	@CrossOrigin(origins = "*")
+	@GetMapping("/send-invitation/{inv-id}")
+	public void sendInvitation(@PathVariable("inv-id") int invId) {
+		//xlsParser xls = new xlsParser();
+		//xls.parser();
+		//System.out.println("xlssss test test"+ xlsParser.nbrows);
+		 invitationService.sendInvitation(invId);
+	}
 	@CrossOrigin(origins = "*")
 	@GetMapping("/retrieveUnacceptedInvitations")
 	@ResponseBody
 	public List<Invitation> getUnacceptedInvitations() {
 
 		List<Invitation> listInvitations = invitationService.retrieveUnacceptedInvitation();
+		return listInvitations;
+	}
+	
+	
+	@CrossOrigin(origins = "*")
+	@GetMapping("/retrieveInvitations")
+	@ResponseBody
+	public List<Invitation> getInvitations() {
+
+		List<Invitation> listInvitations = invitationService.retrieveAllInvitations();
 		return listInvitations;
 	}
 

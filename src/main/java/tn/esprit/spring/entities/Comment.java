@@ -33,7 +33,7 @@ public class Comment  implements Serializable {
 	 private java.util.Date dateComment;
 	//@ToString.Exclude
 	@ManyToOne
-	private Employee employees;
+	private Client client;
 	//@ToString.Exclude
 	@ManyToOne
 	private Post posts;

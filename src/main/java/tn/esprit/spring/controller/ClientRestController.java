@@ -139,6 +139,7 @@ public class ClientRestController {
 	
 	@ApiOperation(value = "forgetPassword")
 	@GetMapping("/forgetPassword/{email}")
+	@CrossOrigin(origins = "*")
 
 	public void ResetPassword(@PathVariable("email") String email) {
 		 clientService.forgetPassword(email);
@@ -220,6 +221,7 @@ public class ClientRestController {
 
 	// http://localhost:8089/SpringMVC/client/modify-client
 	@PutMapping("/modify-client/{client-id}")
+	@CrossOrigin(origins = "*")
 	public Client modifyClient(@PathVariable("client-id") Long clientId,@RequestBody Client client) {
 		return clientService.updateClient(clientId,client);
 	}

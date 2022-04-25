@@ -130,7 +130,7 @@ public class ClientServiceImpl implements IClientService {
 	public void forgetPassword(String email) {
 		// TODO Auto-generated method stub
 		Client c = clientRepository.findByEmailAddress(email);
-		mailConf.send(c.getEmail(), c.getEmail(), "Click on the link to reset your password http://localhost:8089/SpringMVC/client/modify-client/"+c.getIdClient());
+		mailConf.send(c.getEmail(), c.getEmail(), "Click on the link to reset your password http://localhost:4200/changePassword/"+c.getIdClient());
 		
 	}
 

@@ -37,9 +37,9 @@ public class Followers {
 	@ToString.Exclude
 	@ManyToOne
     @JoinColumn(name="from_user_fk")
-    private Employee from;
+    private Client from;
 
     @ManyToOne
     @JoinColumn(name="to_user_fk")
-    private Employee to;
+    private Client to;
 }

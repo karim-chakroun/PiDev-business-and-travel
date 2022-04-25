@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Post;
 import tn.esprit.spring.entities.Task;
+import tn.esprit.spring.repository.ClientRepository;
 import tn.esprit.spring.repository.CommentRepository;
 import tn.esprit.spring.repository.EmployeeRepository;
 import tn.esprit.spring.repository.PostRepository;
@@ -22,6 +24,8 @@ public class CommentServiceImpl implements CommentService {
 	EmployeeRepository emRepository;
 	@Autowired
 	PostRepository postRepository;
+	@Autowired
+	ClientRepository clientRepo;
 	@Override
 	public List<Comment> retrieveAllComment() {
 		// TODO Auto-generated method stub
@@ -63,15 +67,15 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	
-	public void addComment(Comment e,int idpost,int iduser) {
+	public void addComment(Comment e,int idpost,long iduser) {
 		// TODO Auto-generated method stub
 		//Date now = new Date();
 		//e.setDateComment(now);
 		Post p = postRepository.findById(idpost).orElse(null);
-		Employee c=emRepository.findById(iduser).orElse(null);
+		Client c=clientRepo.findById(iduser).orElse(null);
 		//p.getComments().add(e);
 		e.setPosts(p);
-		e.setEmployees(c);
+		e.setClient(c);;
 		CommentRepository.save(e);
 		
 	}

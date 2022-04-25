@@ -8,7 +8,7 @@ public interface FollowerService {
 
 	List<Followers> retrieveAllFollowerss();
 
-	Followers addFollowers(Followers c,int id,int id2);
+	Followers addFollowers(Followers c,long id,long id2);
 
 	void deleteFollowers(Long id);
 

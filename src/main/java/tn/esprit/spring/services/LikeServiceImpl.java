@@ -7,10 +7,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Comment;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.likes;
 import tn.esprit.spring.entities.Post;
+import tn.esprit.spring.repository.ClientRepository;
 import tn.esprit.spring.repository.EmployeeRepository;
 import tn.esprit.spring.repository.LikeRepository;
 //import tn.esprit.spring.repository.likesRepository;
@@ -24,6 +26,9 @@ public class LikeServiceImpl implements LikeService{
 	LikeRepository likesRepository;
 	@Autowired
 	EmployeeRepository emRepository;
+
+	@Autowired
+	ClientRepository clientRepo;
 	@Override
 	public List<likes> retrieveAllRates() {
 		// TODO Auto-generated method stub
@@ -31,12 +36,12 @@ public class LikeServiceImpl implements LikeService{
 	}
 
 	@Override
-	public likes addRate(likes e,int id,int iduser) {
+	public likes addRate(likes e,int id,long iduser) {
 		Post p = postRepository.findById(id).orElse(null);
-		Employee c=emRepository.findById(iduser).orElse(null);
+		Client c=clientRepo.findById(iduser).orElse(null);
 		//p.getComments().add(e);
 		e.setPosts(p);
-		e.setEmployees(c);
+		e.setClient(c);
 		likesRepository.save(e);
 		return null;
 	}

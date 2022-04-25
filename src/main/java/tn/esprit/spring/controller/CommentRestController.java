@@ -3,6 +3,7 @@ package tn.esprit.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,9 @@ public class CommentRestController {
 				List<Comment> listComment = commentservice.retrieveCooment(postId);
 				return listComment;
 			}
+			@CrossOrigin(origins = "*")
 			@PostMapping("/add-Comment/{Post-id}/{user-id}")
-			public void addComment(@RequestBody Comment e,@PathVariable("Post-id") int postIdi,@PathVariable("user-id") int postIdu) {
+			public void addComment(@RequestBody Comment e,@PathVariable("Post-id") int postIdi,@PathVariable("user-id") long postIdu) {
 				//System.out.print(e.toString());
 				commentservice.addComment(e,postIdi,postIdu);
 				
@@ -44,6 +46,7 @@ public class CommentRestController {
 				commentservice.deletePosts(postId);
 			}
 	
+			@CrossOrigin(origins = "*")
 			@GetMapping("/retrieve-Allcomments")
 			public List<Comment> getallComments() {
 				List<Comment> listComment = commentservice.retrieveAllComment();

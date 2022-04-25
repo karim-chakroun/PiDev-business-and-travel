@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import tn.esprit.spring.entities.Client;
 import tn.esprit.spring.entities.Employee;
 import tn.esprit.spring.entities.Followers;
+import tn.esprit.spring.repository.ClientRepository;
 import tn.esprit.spring.repository.CommentRepository;
 import tn.esprit.spring.repository.EmployeeRepository;
 import tn.esprit.spring.repository.FollowRepository;
@@ -18,6 +19,9 @@ public class FollowersServiceImpl implements FollowerService {
 	FollowRepository followersRepositoey ;
 	@Autowired
 	EmployeeRepository UsertRepository;
+
+	@Autowired
+	ClientRepository clientRepo;
 	@Override
 	public List<Followers> retrieveAllFollowerss() {
 		
@@ -25,11 +29,11 @@ public class FollowersServiceImpl implements FollowerService {
 	}
 
 	@Override
-	public Followers addFollowers(Followers e ,int id,int id2) {
+	public Followers addFollowers(Followers e ,long id,long id2) {
 		
-		Employee c= UsertRepository.findById(id).orElse(null);
+		Client c= clientRepo.findById(id).orElse(null);
 		
-		Employee c2=UsertRepository.findById(id2).orElse(null);
+		Client c2=clientRepo.findById(id2).orElse(null);
 		e.setFrom(c);
 		e.setTo(c2);
 		return followersRepositoey.save(e);

@@ -20,5 +20,7 @@ public interface IInvitationService {
 	Invitation updateInvitation(Invitation c);
 
 	Invitation retrieveInvitation(int id);
+	
+	public void sendInvitation(int id);
 
 }
