@@ -120,6 +120,15 @@ public class ClientRestController {
 	}
 	
 	@CrossOrigin(origins = "*")
+	@GetMapping("retrieve-client-by-id/{client-id}")
+	@ResponseBody
+	public Client getClientsById(@PathVariable("client-id") long clientId) {
+
+		Client client = clientService.retrieveClient(clientId);
+		return client;
+	}
+	
+	@CrossOrigin(origins = "*")
 	@GetMapping("/profile")
 	@ResponseBody
 	public Client userProfile(HttpServletRequest request) {
