@@ -1,6 +1,9 @@
 package tn.esprit.spring.services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -37,11 +40,16 @@ public class LikeServiceImpl implements LikeService{
 
 	@Override
 	public likes addRate(likes e,int id,long iduser) {
+		Date date = new Date();
+		String strDateFormat = "hh:mm:ss a";
+	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+	    String formattedDate= dateFormat.format(date);
 		Post p = postRepository.findById(id).orElse(null);
 		Client c=clientRepo.findById(iduser).orElse(null);
 		//p.getComments().add(e);
 		e.setPosts(p);
 		e.setClient(c);
+		e.setDateDislike(date);
 		likesRepository.save(e);
 		return null;
 	}

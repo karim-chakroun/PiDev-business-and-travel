@@ -3,6 +3,7 @@ package tn.esprit.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +38,7 @@ public class LikesController {
 		return post;
 	
 }
+	@CrossOrigin(origins = "*")
 	@PostMapping("/add-Comment/{Post-id}/{user-id}")
 	public void addComment(@RequestBody likes e,@PathVariable("Post-id") int postIdi,@PathVariable("user-id") int postIdu) {
 		//System.out.print(e.toString());

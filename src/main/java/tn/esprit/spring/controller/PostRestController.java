@@ -35,6 +35,7 @@ public class PostRestController {
 		List<Post> listPost = postxervice.retrieveAllPosts();
 		return listPost;
 	}
+	@CrossOrigin(origins = "*")
 	@DeleteMapping("/remove-post/{post-id}")
 	public void removeEmployee(@PathVariable("post-id") int employeeId) {
 		postxervice.deletePosts(employeeId);
@@ -56,6 +57,7 @@ public class PostRestController {
 			return emp;
 			
 		}
+		@CrossOrigin(origins = "*")
 		@GetMapping("/retrive-Posts-with-most-likes")
 		public Post getMostPosts() {
 			Post post =postxervice.retrieveBestPosts1() ;

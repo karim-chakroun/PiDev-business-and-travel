@@ -51,6 +51,8 @@ public class Client implements Serializable {
     private Role rolee;
     private int numBan;
 	private int occ;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<likes> likes;
 	
 	
 	private String imageName;

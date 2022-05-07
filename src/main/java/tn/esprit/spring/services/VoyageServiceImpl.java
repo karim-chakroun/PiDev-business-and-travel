@@ -112,7 +112,7 @@ public class VoyageServiceImpl implements IVoyageService{
 			 e.getParticipation().size()>0
 		).collect(Collectors.toList());
 	}
-	@Scheduled(cron = "*/5 * * * * *" )
+	//@Scheduled(cron = "*/5 * * * * *" )
 		@Override
 		public void updateNbreIntervenant() {
 			// TODO Auto-generated method stub

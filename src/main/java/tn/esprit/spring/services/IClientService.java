@@ -8,6 +8,8 @@ import tn.esprit.spring.entities.Client;
 public interface IClientService {
 
 	List<Client> retrieveAllClients();
+	
+	List<Client> retrieveClientByName(String name);
 
 	Client addClient(Client c);
 

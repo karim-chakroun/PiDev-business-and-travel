@@ -71,6 +71,7 @@ public class VoyageRestController {
 			return voyageService.retrieveVoyage(voyageId);
 		}
 		// http://localhost:8089/SpringMVC/voyage/add-voyage	
+				@CrossOrigin(origins = "*")
 				@PostMapping("/add-participation/{voyageId}/{employeeId}")
 				public void addPartcipation(@PathVariable("voyageId") int voyageId,@PathVariable("employeeId") int employeeId) throws Exception {
 					 voyageService.addParticipation(voyageId, employeeId);
@@ -80,6 +81,7 @@ public class VoyageRestController {
 				public List<Employee> findEmployeeAffectedToVoyageByEntrepriseId(@PathVariable("entrepriseId") int entrepriseId ){
 					return voyageService.findEmployeeAffectedToVoyageByEntrepriseId(entrepriseId);
 				}
+				@CrossOrigin(origins = "*")
 				@PostMapping("/add-vote/{voyageId}/{employeeId}/{note}")
 				public void addVote(@PathVariable("voyageId") int voyageId,@PathVariable("employeeId") int employeeId,@PathVariable("note") int note)  {
 					 voyageService.voterVoyage(voyageId, employeeId, note);

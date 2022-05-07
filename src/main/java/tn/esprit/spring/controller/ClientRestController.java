@@ -28,10 +28,12 @@ import tn.esprit.spring.reponse.ResponseHandler;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import tn.esprit.spring.entities.Client;
+import tn.esprit.spring.entities.Domaines;
 import tn.esprit.spring.entities.Entreprise;
 import tn.esprit.spring.entities.Invitation;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.repository.ClientRepository;
+import tn.esprit.spring.repository.DomainRepository;
 import tn.esprit.spring.repository.EntrepriseRepository;
 import tn.esprit.spring.repository.IRoleRepository;
 import tn.esprit.spring.repository.InvitationRepository;
@@ -59,6 +61,8 @@ public class ClientRestController {
 	
 	@Autowired
 	InvitationRepository invitationRepo;
+	@Autowired
+	DomainRepository domainRepo;
 	
 	
 
@@ -104,6 +108,14 @@ public class ClientRestController {
 	public List<Client> getClients() {
 
 		List<Client> listClients = clientService.retrieveAllClients();
+		return listClients;
+	}
+	@CrossOrigin(origins = "*")
+	@GetMapping("retrieve-client-by-name/{client-name}")
+	@ResponseBody
+	public List<Client> getClientsByName(@PathVariable("client-name") String clientName) {
+
+		List<Client> listClients = clientService.retrieveClientByName(clientName);
 		return listClients;
 	}
 	
@@ -220,16 +232,125 @@ public class ClientRestController {
 	}
 
 	// http://localhost:8089/SpringMVC/client/modify-client
-	@PutMapping("/modify-client/{client-id}")
+	@PutMapping("/updatePassword/{client-id}")
 	@CrossOrigin(origins = "*")
-	public Client modifyClient(@PathVariable("client-id") Long clientId,@RequestBody Client client) {
-		return clientService.updateClient(clientId,client);
+	@ResponseBody
+	public ResponseEntity<Object> updatePassword(@PathVariable("client-id") Long id,@RequestBody Client c,HttpServletRequest request) {
+
+		Client client1 = clientRepository.findByEmailAddress(c.getEmail());
+		Role rolee = roleRepository.getById(2);
+		
+		
+			
+			if (client1 == null) {
+				Client cl= clientRepository.findById(id).get();
+				System.out.println("test1");
+				c.setPassword(passwordEncoder.encode(c.getPassword()));
+				c.setEnabled(true);
+				c.setIdClient(id);
+				c.setDateNaissance(cl.getDateNaissance());
+				c.setEmail(cl.getEmail());
+				c.setDomain(cl.getDomain());
+				c.setNumBan(cl.getNumBan());
+				c.setImageName(cl.getImageName());
+				c.setRole(cl.getRole());
+				
+				
+				c.setNom(cl.getNom());
+				c.setPrenom(cl.getPrenom());
+				c.setProfession(cl.getProfession());
+				
+				c.setRolee(cl.getRolee());
+				clientRepository.save(c);
+				//Client client = clientService.addClient(c);
+				return ResponseHandler.generateResponse("Successfully added data!", HttpStatus.OK, c);
+
+			} else {
+				System.out.println("test2");
+				//throw new IllegalArgumentException("Mail alreasy exists");
+				return ResponseHandler.generateResponse("Mail already exists", HttpStatus.MULTI_STATUS, "Mail already exists");
+			}
+			
+		
+		
+		
+		
+		
 	}
 	
-	@PutMapping("/modify-Domain/{client-id}")
-	public Client updateDomain(@PathVariable("client-id") Long clientId,@RequestBody Client client) {
-		return clientService.updateDomain(clientId,client);
+	
+	@PutMapping("/updateDomain/{client-id}")
+	@ResponseBody
+	public ResponseEntity<Object> modifyDomain(@PathVariable("client-id") Long id,@RequestBody Client c,HttpServletRequest request) {
+
+		Client client1 = clientRepository.findByEmailAddress(c.getEmail());
+		
+		
+		
+			
+			if (client1 == null) {
+				Client cl= clientRepository.findById(id).get();
+				System.out.println("test1");
+				
+				
+				
+				
+				
+				List<Domaines> listDomains = domainRepo.findAll();
+				Role rolee = roleRepository.getById(2);
+				Domaines domaines=new Domaines();
+				
+				
+				c.setIdClient(id);
+				c.setDateNaissance(cl.getDateNaissance());
+				c.setEmail(cl.getEmail());
+				c.setEnabled(cl.isEnabled());
+				c.setNom(cl.getNom());
+				c.setPrenom(cl.getPrenom());
+				c.setRole(cl.getRole());
+				c.setProfession(cl.getProfession());
+				c.setRole(cl.getRole());
+				c.setPassword(cl.getPassword());
+				c.setRolee(cl.getRolee());
+				for(Domaines d:listDomains)
+				{
+					if(d.getNom().equalsIgnoreCase(c.getDomain())) {
+						c.setDomain(c.getDomain());
+						System.out.println("existe");
+						break;
+					}
+					else {
+						domaines.setNom(c.getDomain());
+						domainRepo.save(domaines);
+						c.setDomain(c.getDomain());
+						System.out.println("n existe pas");
+					}
+				}
+				
+				
+				clientRepository.save(c);
+				
+				
+				//Client client = clientService.addClient(c);
+				return ResponseHandler.generateResponse("Successfully added data!", HttpStatus.OK, c);
+
+			} else {
+				System.out.println("test2");
+				//throw new IllegalArgumentException("Mail alreasy exists");
+				return ResponseHandler.generateResponse("Mail already exists", HttpStatus.MULTI_STATUS, "Mail already exists");
+			}
+			
+		
+		
+		
+		
+		
 	}
+	//@CrossOrigin(origins = "*")
+	//@PutMapping("/modify-Domain/{client-id}")
+	//public Client updateDomain(@PathVariable("client-id") Long clientId,@RequestBody Client client) {
+		//return clientService.updateDomain(clientId,client);
+	//}
 
 
 }

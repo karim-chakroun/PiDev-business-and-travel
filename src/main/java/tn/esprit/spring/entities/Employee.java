@@ -30,7 +30,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+
 @RequiredArgsConstructor
 public class Employee  implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -39,16 +39,16 @@ public class Employee  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEmployee;
 	
-	@NonNull private String  email,password;
-	@NonNull private int numTel;
+	 private String  email,password;
+	 private int numTel;
 
-	@NonNull private String FirstName, LastName;
-	@NonNull private float salaire,prime=0;
-	@NonNull private int nbreProjet=0;
+	 private String FirstName, LastName;
+	 private float salaire,prime=0;
+	 private int nbreProjet=0;
 	@Temporal (TemporalType.DATE)
-	@NonNull private java.util.Date dateNaissance;
-	@NonNull private int numBan;
-	@NonNull private int occ;
+	 private java.util.Date dateNaissance;
+	 private int numBan;
+	 private int occ;
 	@Enumerated(EnumType.STRING)
 	private Profession profession;
 	@Enumerated(EnumType.STRING)

@@ -13,6 +13,7 @@ import org.springframework.security.config.authentication.PasswordEncoderParser;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import tn.esprit.spring.filters.JwtRequestFilter;
@@ -76,6 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 @Bean
 	  public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
+		 //return new Pbkdf2PasswordEncoder("pepper", 200000, 256);
 		// return NoOpPasswordEncoder.getInstance();
 	  }
 	  

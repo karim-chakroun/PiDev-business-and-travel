@@ -116,13 +116,21 @@ public class ClientServiceImpl implements IClientService {
 		c.setProfession(cl.getProfession());
 		c.setRole(cl.getRole());
 		c.setPassword(passwordEncoder.encode(c.getPassword()));
+		System.out.println("password test "+c.getPassword());
 		clientRepository.save(c);
+		Boolean isMatch = passwordEncoder.matches("Admin123.",c.getPassword());
+		System.out.println("ismatch"+isMatch);
 		return c;
 	}
 
 	@Override
 	public Client retrieveClient(Long id) {
 		Client c= clientRepository.findById(id).get();
+		return c;
+	}
+	@Override
+	public List<Client> retrieveClientByName(String name) {
+		List<Client> c= clientRepository.findByNom(name);
 		return c;
 	}
 

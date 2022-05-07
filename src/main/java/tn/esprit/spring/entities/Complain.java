@@ -45,5 +45,7 @@ public class Complain  implements Serializable {
 	@ManyToOne
 	
 	private Employee employees;
+	private String email;
+	
 	
 }
